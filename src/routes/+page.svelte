@@ -3,9 +3,7 @@
 	import { player } from '$lib/client/player'
 	import Form from '$lib/components/Form.svelte'
 	import Game from '$lib/components/Game.svelte'
-	import Header from '$lib/components/Header.svelte'
 	import LeaderBoard from '$lib/components/LeaderBoard.svelte'
-	import './app.css'
 
 	let { data } = $props()
 	let board = $derived(data.board)
@@ -82,14 +80,10 @@
 	}}>Clear leaderboard</button
 >
 
-<Header />
+<Game {score} bind:canvas {playing} {handle_start} />
 
-<main>
-	<Game {score} bind:canvas {playing} {handle_start} />
+{#if board}
+	<LeaderBoard {board} status={leaderboard_status} />
+{/if}
 
-	{#if board}
-		<LeaderBoard {board} status={leaderboard_status} />
-	{/if}
-
-	<Form {score} {update_leaderboard} bind:is_open_dialog />
-</main>
+<Form {score} {update_leaderboard} bind:is_open_dialog />

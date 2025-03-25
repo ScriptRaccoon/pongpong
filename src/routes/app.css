@@ -11,11 +11,6 @@ body {
 	line-height: 1.4;
 }
 
-main {
-	width: 600px;
-	margin-inline: auto;
-}
-
 button {
 	font: inherit;
 	background: orangered;
