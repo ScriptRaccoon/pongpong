@@ -1,11 +1,11 @@
-import { type LeaderBoard, LeaderboardSchema } from '../shared/schemas'
+import { type LeaderBoardType, LeaderBoardSchema } from '../shared/schemas'
 import { MAX_LEADERBOARD_SIZE } from '../shared/config'
 import { turso } from './turso'
 
-export async function get_leaderboard(): Promise<LeaderBoard> {
+export async function get_leaderboard(): Promise<LeaderBoardType> {
 	const sql = 'SELECT * FROM leaderboard ORDER BY score DESC'
 	const { rows } = await turso.execute(sql)
-	return LeaderboardSchema.parse(rows)
+	return LeaderBoardSchema.parse(rows)
 }
 
 export async function handle_new_score(
@@ -43,7 +43,7 @@ async function add_score(name: string, score: number): Promise<{ added: boolean 
 	}
 }
 
-function is_score_good_enough(score: number, leaderboard: LeaderBoard): boolean {
+function is_score_good_enough(score: number, leaderboard: LeaderBoardType): boolean {
 	if (leaderboard.length < MAX_LEADERBOARD_SIZE) {
 		return true
 	}
@@ -55,7 +55,9 @@ function is_score_good_enough(score: number, leaderboard: LeaderBoard): boolean 
 	return score > minimal_score
 }
 
-async function remove_worst_from_leaderboard(leaderboard: LeaderBoard): Promise<void> {
+async function remove_worst_from_leaderboard(
+	leaderboard: LeaderBoardType,
+): Promise<void> {
 	const worst = leaderboard.reduce((acc, curr) => (curr.score < acc.score ? curr : acc))
 	if (!worst) return
 

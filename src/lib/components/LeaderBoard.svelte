@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type LeaderBoard as LeaderBoardType } from '$lib/shared/schemas'
+	import { type LeaderBoardType } from '$lib/shared/schemas'
 
 	type Props = {
 		board: LeaderBoardType

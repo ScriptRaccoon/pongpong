@@ -37,6 +37,6 @@ export const ScoreEntrySchema = z.object({
 	created_at: z.string().refine((value) => !isNaN(Date.parse(value))),
 })
 
-export const LeaderboardSchema = z.array(ScoreEntrySchema)
+export const LeaderBoardSchema = z.array(ScoreEntrySchema)
 
-export type LeaderBoard = z.infer<typeof LeaderboardSchema>
+export type LeaderBoardType = z.infer<typeof LeaderBoardSchema>
