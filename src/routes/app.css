@@ -41,87 +41,12 @@ button:focus-visible {
 	outline-offset: 2px;
 }
 
-.leaderboard {
-	border-collapse: collapse;
-	width: 100%;
-	border: 1px solid #222;
-	margin-bottom: 1rem;
-}
-
-.leaderboard thead {
-	background-color: #222;
-}
-
-.leaderboard :is(td, th) {
-	padding: 0.4rem 0.8rem;
-	text-align: left;
-	white-space: nowrap;
-}
-
-.leaderboard tr:nth-child(even) {
-	background-color: #111;
-}
-
 section {
 	margin-bottom: 2rem;
 }
 
-header {
-	padding-block: 1.5rem;
-}
-
-h1 {
-	text-align: center;
-}
-
 h2 {
 	margin-bottom: 0.5rem;
-}
-
-dialog {
-	border: none;
-	outline: none;
-	background-color: #444;
-	color: inherit;
-	padding: 1rem;
-	border-radius: 0.4rem;
-	box-shadow: 0 0 1rem #000;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: min(100vw, 30rem);
-}
-
-.overlay {
-	display: none;
-	pointer-events: none;
-	position: fixed;
-	inset: 0;
-	background-color: #0007;
-}
-
-.form {
-	z-index: 1;
-}
-
-.form .group {
-	margin-block: 0.75rem;
-}
-
-.form label {
-	display: block;
-	font-weight: bold;
-}
-
-.form menu {
-	margin-top: 1rem;
-	display: flex;
-	gap: 0.5rem;
-}
-
-.form .error {
-	color: yellow;
 }
 
 input[type='text'] {
