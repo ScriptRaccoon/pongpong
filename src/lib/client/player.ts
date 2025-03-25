@@ -41,5 +41,3 @@ export class Player {
 		this.vy = -Player.MAX_VELOCITY
 	}
 }
-
-export const player = new Player()

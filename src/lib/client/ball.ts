@@ -64,5 +64,3 @@ export class Ball {
 		return null
 	}
 }
-
-export const ball = new Ball()

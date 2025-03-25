@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { ball } from '$lib/client/ball'
-	import { player } from '$lib/client/player'
+	import { Ball } from '$lib/client/ball'
+	import { Player } from '$lib/client/player'
 	import Form from '$lib/components/Form.svelte'
 	import Game from '$lib/components/Game.svelte'
 	import LeaderBoard from '$lib/components/LeaderBoard.svelte'
@@ -15,6 +15,9 @@
 	let playing = $state(false)
 	let leaderboard_status = $state('')
 	let is_open_dialog = $state(false)
+
+	const ball = new Ball()
+	const player = new Player()
 
 	async function update_leaderboard(message?: string) {
 		const res = await fetch('/api/leaderboard')
