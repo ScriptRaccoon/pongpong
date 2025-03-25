@@ -5,28 +5,24 @@ import { Player } from './player'
 export class Game {
 	public score = $state(0)
 	public playing = $state(false)
-	public ctx: CanvasRenderingContext2D
 	public ball: Ball
 	public player: Player
 	public gameover_callback?: () => void
 
-	constructor(canvas: HTMLCanvasElement) {
-		const ctx = canvas.getContext('2d')
-		if (!ctx) throw new Error('Canvas context not found')
-		this.ctx = ctx
+	constructor() {
 		this.ball = new Ball()
 		this.player = new Player()
 	}
 
-	loop() {
-		const ctx = this.ctx
-		clear_canvas(ctx)
-		this.player.update(ctx)
-		const action = this.ball.update(ctx, this.player)
+	update() {
+		this.player.update()
+		const action = this.ball.update(this.player)
 		if (action === 'collision') this.handle_collision()
 		else if (action === 'gameover') this.handle_gameover()
-		this.player.draw(ctx)
-		this.ball.draw(ctx)
+	}
+
+	loop() {
+		this.update()
 		if (this.playing) requestAnimationFrame(() => this.loop())
 	}
 
@@ -41,7 +37,7 @@ export class Game {
 
 	handle_start() {
 		this.score = 0
-		this.ball.reset(this.ctx)
+		this.ball.reset()
 		this.playing = true
 		this.loop()
 	}
@@ -53,5 +49,23 @@ export class Game {
 	handle_gameover() {
 		this.playing = false
 		this.gameover_callback?.()
+	}
+}
+
+export class GameClient extends Game {
+	constructor(private ctx: CanvasRenderingContext2D) {
+		super()
+	}
+
+	draw() {
+		clear_canvas(this.ctx)
+		this.player.draw(this.ctx)
+		this.ball.draw(this.ctx)
+	}
+
+	loop() {
+		this.update()
+		this.draw()
+		if (this.playing) requestAnimationFrame(() => this.loop())
 	}
 }

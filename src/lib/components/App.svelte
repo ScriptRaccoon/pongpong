@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { Game } from '$lib/client/game.svelte'
+	import { GameClient } from '$lib/client/game.svelte'
 	import Form from '$lib/components/Form.svelte'
 	import LeaderBoard from '$lib/components/LeaderBoard.svelte'
 	import type { LeaderBoardType } from '$lib/shared/schemas'
 
 	type Props = {
-		canvas: HTMLCanvasElement
+		ctx: CanvasRenderingContext2D
 		board: LeaderBoardType
 	}
 
-	let { board, canvas }: Props = $props()
+	let { board, ctx }: Props = $props()
 
-	const game = new Game(canvas)
+	const game = new GameClient(ctx)
 
 	let leaderboard_status = $state('')
 	let is_open_dialog = $state(false)

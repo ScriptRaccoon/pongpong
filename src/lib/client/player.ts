@@ -1,3 +1,5 @@
+import { CANVAS_HEIGHT } from '$lib/shared/config'
+
 export class Player {
 	static MAX_VELOCITY = 7
 	static FRICTION = 0.9
@@ -14,7 +16,7 @@ export class Player {
 		ctx.fillRect(this.x, this.y, this.size.x, this.size.y)
 	}
 
-	update(ctx: CanvasRenderingContext2D) {
+	update() {
 		this.y += this.vy
 		this.vy *= Player.FRICTION
 
@@ -27,8 +29,8 @@ export class Player {
 			this.vy = 0
 		}
 
-		if (this.y > ctx.canvas.height - this.size.y) {
-			this.y = ctx.canvas.height - this.size.y
+		if (this.y > CANVAS_HEIGHT - this.size.y) {
+			this.y = CANVAS_HEIGHT - this.size.y
 			this.vy = 0
 		}
 	}

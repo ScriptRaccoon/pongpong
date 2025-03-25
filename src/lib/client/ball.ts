@@ -1,3 +1,4 @@
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from '$lib/shared/config'
 import { type Player } from './player'
 
 type UpdateAction = 'gameover' | 'collision' | null
@@ -19,14 +20,14 @@ export class Ball {
 		ctx.closePath()
 	}
 
-	reset(ctx: CanvasRenderingContext2D) {
-		this.x = ctx.canvas.width / 2
-		this.y = ctx.canvas.height / 2
+	reset() {
+		this.x = CANVAS_WIDTH / 2
+		this.y = CANVAS_HEIGHT / 2
 		this.vx = 3 + Math.random()
 		this.vy = 2 * (Math.random() - 0.5)
 	}
 
-	update(ctx: CanvasRenderingContext2D, player: Player): UpdateAction {
+	update(player: Player): UpdateAction {
 		this.x += this.vx
 		this.y += this.vy
 
@@ -39,13 +40,13 @@ export class Ball {
 		if (this.y - this.r <= 0) {
 			this.y = this.r
 			this.vy = -this.vy
-		} else if (this.y + this.r >= ctx.canvas.height) {
-			this.y = ctx.canvas.height - this.r
+		} else if (this.y + this.r >= CANVAS_HEIGHT) {
+			this.y = CANVAS_HEIGHT - this.r
 			this.vy = -this.vy
 		}
 
-		if (this.x + this.r >= ctx.canvas.width) {
-			this.x = ctx.canvas.width - this.r
+		if (this.x + this.r >= CANVAS_WIDTH) {
+			this.x = CANVAS_WIDTH - this.r
 			this.vx = -this.vx
 		}
 

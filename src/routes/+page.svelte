@@ -3,14 +3,15 @@
 	import { CANVAS_HEIGHT, CANVAS_WIDTH } from '$lib/shared/config.js'
 
 	let canvas = $state<HTMLCanvasElement | null>(null)
+	let ctx = $derived(canvas?.getContext('2d') ?? null)
 
 	let { data } = $props()
 </script>
 
 <canvas width={CANVAS_WIDTH} height={CANVAS_HEIGHT} bind:this={canvas}></canvas>
 
-{#if canvas && data.board}
-	<App board={data.board} {canvas} />
+{#if ctx && data.board}
+	<App board={data.board} {ctx} />
 {/if}
 
 <style>
