@@ -5,6 +5,6 @@
 		pointer-events: none;
 		position: fixed;
 		inset: 0;
-		background-color: #0007;
+		backdrop-filter: blur(3px) brightness(0.5);
 	}
 </style>
