@@ -19,3 +19,13 @@ export function is_score_good_enough(
 
 	return score > minimal_score
 }
+
+export function distance(x1: number, y1: number, x2: number, y2: number) {
+	return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+}
+
+export function rotate(x: number, y: number, angle: number) {
+	const cos = Math.cos(angle)
+	const sin = Math.sin(angle)
+	return [x * cos - y * sin, x * sin + y * cos]
+}

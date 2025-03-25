@@ -1,6 +1,7 @@
 import { CANVAS_WIDTH } from '$lib/shared/config'
 import { clear_canvas } from '$lib/shared/utils'
 import { Ball } from './ball'
+import { Deviator } from './deviator'
 import { Player } from './player'
 
 export class Game {
@@ -10,6 +11,7 @@ export class Game {
 	public player_left: Player
 	public player_right: Player
 	public gameover_callback?: () => void
+	public deviators: Deviator[] = []
 
 	constructor() {
 		this.ball = new Ball()
@@ -20,6 +22,9 @@ export class Game {
 	update() {
 		this.player_left.update()
 		this.player_right.update()
+		this.deviators.forEach((deviator) => {
+			deviator.handle_collison(this.ball)
+		})
 		const action = this.ball.update(this.player_left, this.player_right)
 		if (action === 'collision') this.handle_collision()
 		else if (action === 'gameover') this.handle_gameover()
@@ -45,12 +50,16 @@ export class Game {
 		this.ball.reset()
 		this.player_left.reset()
 		this.player_right.reset()
+		this.deviators = []
 		this.playing = true
 		this.loop()
 	}
 
 	handle_collision() {
 		this.score++
+		if (Math.random() < 0.1) {
+			this.deviators.push(new Deviator())
+		}
 	}
 
 	handle_gameover() {
@@ -66,6 +75,7 @@ export class GameClient extends Game {
 
 	draw() {
 		clear_canvas(this.ctx)
+		this.deviators.forEach((deviator) => deviator.draw(this.ctx))
 		this.player_left.draw(this.ctx)
 		this.player_right.draw(this.ctx)
 		this.ball.draw(this.ctx)

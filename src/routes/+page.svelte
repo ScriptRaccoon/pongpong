@@ -8,7 +8,7 @@
 
 <p>
 	Control the two paddles with the keys
-	<kbd>Up</kbd> / <kbd>Down</kbd>.
+	<kbd>Up</kbd> / <kbd>Down</kbd>. Watch out for deviators!
 </p>
 
 <canvas width={CANVAS_WIDTH} height={CANVAS_HEIGHT} bind:this={canvas}></canvas>
