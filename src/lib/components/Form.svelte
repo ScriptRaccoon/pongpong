@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { MAX_LEADERBOARD_SIZE } from '$lib/shared/config'
 	import { NameSchema } from '$lib/shared/schemas'
 	import Overlay from './Overlay.svelte'
 
@@ -10,11 +11,11 @@
 
 	let { score, is_open_dialog = $bindable(), update_leaderboard }: Props = $props()
 
+	let dialog = $state<HTMLDialogElement | null>(null)
+
 	let name = $state('')
 	let name_error = $state('')
 	let form_error = $state('')
-
-	let dialog = $state<HTMLDialogElement | null>(null)
 
 	$effect(() => {
 		if (is_open_dialog) dialog?.showModal()
@@ -40,9 +41,7 @@
 			const res = await fetch('/api/leaderboard', {
 				method: 'POST',
 				body: JSON.stringify({ name, score }),
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 			})
 
 			if (!res.ok) {
@@ -73,7 +72,7 @@
 		</h2>
 		<p>
 			Enter your name to save your score to the leaderboard. It will only be added
-			when you reach the top 5.
+			when you reach the top {MAX_LEADERBOARD_SIZE}.
 		</p>
 		<div class="group">
 			<label for="name_input">Name</label>
@@ -111,10 +110,6 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		width: min(100vw, 30rem);
-	}
-
-	form {
-		z-index: 1;
 	}
 
 	.group {
