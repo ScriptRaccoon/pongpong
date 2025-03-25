@@ -6,6 +6,11 @@
 	let ctx = $derived(canvas?.getContext('2d') ?? null)
 </script>
 
+<p>
+	Control the two paddles with the keys
+	<kbd>Up</kbd> / <kbd>Down</kbd>.
+</p>
+
 <canvas width={CANVAS_WIDTH} height={CANVAS_HEIGHT} bind:this={canvas}></canvas>
 
 {#if ctx}
@@ -13,6 +18,11 @@
 {/if}
 
 <style>
+	p {
+		color: var(--secondary-text-color);
+		margin-bottom: 1rem;
+	}
+
 	canvas {
 		background-color: var(--black-color);
 		outline: 2px solid var(--card-color);

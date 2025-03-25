@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>Pong</title>
+	<title>PongPong</title>
 </svelte:head>
 
 <Header />

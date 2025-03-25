@@ -1,5 +1,5 @@
 <header>
-	<h1>Pong</h1>
+	<h1>PongPong</h1>
 </header>
 
 <style>

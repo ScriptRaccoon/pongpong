@@ -1,8 +1,8 @@
-# Pong Game (with Leaderboard)
+# PongPong Game with Leaderboard
 
 This is a basic browser game with a leaderboard. The latter is stored in a database on [turso](https://turso.tech/). It is mainly an illustration of using turso within SvelteKit.
 
-**Notice.** This is a simple game. Currently, there is no protection against cheating.
+**Notice.** Currently, there is no protection against cheating.
 
 ## Setup
 

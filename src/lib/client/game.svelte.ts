@@ -1,3 +1,4 @@
+import { CANVAS_WIDTH } from '$lib/shared/config'
 import { clear_canvas } from '$lib/shared/utils'
 import { Ball } from './ball'
 import { Player } from './player'
@@ -6,17 +7,20 @@ export class Game {
 	public score = $state(0)
 	public playing = $state(false)
 	public ball: Ball
-	public player: Player
+	public player_left: Player
+	public player_right: Player
 	public gameover_callback?: () => void
 
 	constructor() {
 		this.ball = new Ball()
-		this.player = new Player()
+		this.player_left = new Player(50)
+		this.player_right = new Player(CANVAS_WIDTH - 50 - 20)
 	}
 
 	update() {
-		this.player.update()
-		const action = this.ball.update(this.player)
+		this.player_left.update()
+		this.player_right.update()
+		const action = this.ball.update(this.player_left, this.player_right)
 		if (action === 'collision') this.handle_collision()
 		else if (action === 'gameover') this.handle_gameover()
 	}
@@ -28,16 +32,19 @@ export class Game {
 
 	handle_keydown(key: string) {
 		if (!this.playing) return
+		const acting_player = this.ball.vx < 0 ? this.player_left : this.player_right
 		if (key === 'ArrowUp') {
-			this.player.move_up()
+			acting_player.move_up()
 		} else if (key === 'ArrowDown') {
-			this.player.move_down()
+			acting_player.move_down()
 		}
 	}
 
 	handle_start() {
 		this.score = 0
 		this.ball.reset()
+		this.player_left.reset()
+		this.player_right.reset()
 		this.playing = true
 		this.loop()
 	}
@@ -59,7 +66,8 @@ export class GameClient extends Game {
 
 	draw() {
 		clear_canvas(this.ctx)
-		this.player.draw(this.ctx)
+		this.player_left.draw(this.ctx)
+		this.player_right.draw(this.ctx)
 		this.ball.draw(this.ctx)
 	}
 

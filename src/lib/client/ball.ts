@@ -25,15 +25,15 @@ export class Ball {
 	reset() {
 		this.x = CANVAS_WIDTH / 2
 		this.y = CANVAS_HEIGHT / 2
-		this.vx = 3 + Math.random()
+		this.vx = 2 + Math.random()
 		this.vy = 2 * (Math.random() - 0.5)
 	}
 
-	update(player: Player): UpdateAction {
+	update(player_left: Player, player_right: Player): UpdateAction {
 		this.x += this.vx
 		this.y += this.vy
 
-		if (this.x < 0) {
+		if (this.x < 0 || this.x > CANVAS_WIDTH) {
 			this.vx = 0
 			this.vy = 0
 			return 'gameover'
@@ -47,20 +47,27 @@ export class Ball {
 			this.vy = -this.vy
 		}
 
-		if (this.x + this.r >= CANVAS_WIDTH) {
-			this.x = CANVAS_WIDTH - this.r
+		const collides_with_left_player =
+			this.x - this.r <= player_left.x + player_left.size.x &&
+			this.vx < 0 &&
+			this.y >= player_left.y &&
+			this.y <= player_left.y + player_left.size.y
+
+		if (collides_with_left_player) {
 			this.vx = -this.vx
+			this.x = player_left.x + player_left.size.x + this.r
+			return 'collision'
 		}
 
-		const collides_with_player =
-			this.x - this.r <= player.x + player.size.x &&
-			this.vx < 0 &&
-			this.y >= player.y &&
-			this.y <= player.y + player.size.y
+		const collides_with_right_player =
+			this.x + this.r >= player_right.x &&
+			this.vx > 0 &&
+			this.y >= player_right.y &&
+			this.y <= player_right.y + player_right.size.y
 
-		if (collides_with_player) {
+		if (collides_with_right_player) {
 			this.vx = -this.vx
-			this.x = player.x + player.size.x + this.r
+			this.x = player_right.x - this.r
 			return 'collision'
 		}
 

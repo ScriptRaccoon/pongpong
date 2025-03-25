@@ -3,12 +3,12 @@ import { CANVAS_HEIGHT } from '$lib/shared/config'
 export class Player {
 	static MAX_VELOCITY = 7
 	static FRICTION = 0.9
+	public size: { x: number; y: number } = { x: 20, y: 100 }
 
 	constructor(
-		public x: number = 50,
-		public y: number = 0,
+		public readonly x: number,
+		public y: number = CANVAS_HEIGHT / 2 - this.size.y / 2,
 		public vy: number = 0,
-		public size: { x: number; y: number } = { x: 20, y: 100 },
 	) {}
 
 	draw(ctx: CanvasRenderingContext2D) {
@@ -41,5 +41,10 @@ export class Player {
 
 	move_up() {
 		this.vy = -Player.MAX_VELOCITY
+	}
+
+	reset() {
+		this.y = CANVAS_HEIGHT / 2 - this.size.y / 2
+		this.vy = 0
 	}
 }
