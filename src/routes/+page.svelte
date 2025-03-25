@@ -14,7 +14,7 @@
 
 <style>
 	canvas {
-		outline: 2px solid #555;
+		outline: 2px solid var(--card-color);
 		border-radius: 0.25rem;
 		display: block;
 	}

@@ -45,12 +45,12 @@
 	table {
 		border-collapse: collapse;
 		width: 100%;
-		border: 1px solid #222;
+		border: 1px solid var(--card-color);
 		margin-bottom: 1rem;
 	}
 
 	thead {
-		background-color: #222;
+		background-color: var(--card-color);
 	}
 
 	:is(td, th) {
@@ -60,6 +60,6 @@
 	}
 
 	tr:nth-child(even) {
-		background-color: #111;
+		background-color: var(--secondary-bg-color);
 	}
 </style>

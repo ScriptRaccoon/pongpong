@@ -4,17 +4,26 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--accent-color: orangered;
+	--bg-color: black;
+	--secondary-bg-color: #111;
+	--card-color: #333;
+	--text-color: white;
+	--error-color: yellow;
+}
+
 body {
-	background-color: black;
-	color: white;
+	background-color: var(--bg-color);
+	color: var(--text-color);
 	font-family: Arial, Helvetica, sans-serif;
 	line-height: 1.4;
 }
 
 button {
 	font: inherit;
-	background: orangered;
-	color: white;
+	background: var(--accent-color);
+	color: var(--text-color);
 	border: none;
 	cursor: pointer;
 	padding: 0.2rem 0.4rem;
@@ -32,7 +41,7 @@ button:active {
 }
 
 button:focus-visible {
-	outline: 2px solid white;
+	outline: 2px solid var(--text-color);
 	outline-offset: 2px;
 }
 
@@ -43,7 +52,7 @@ h2 {
 input[type='text'] {
 	font: inherit;
 	color: inherit;
-	background: black;
+	background: var(--bg-color);
 	border-radius: 0.2rem;
 	padding: 0.4rem;
 	border: none;
@@ -51,5 +60,9 @@ input[type='text'] {
 }
 
 input[type='text']:focus-visible {
-	outline: 2px solid orangered;
+	outline: 2px solid var(--accent-color);
+}
+
+.error {
+	color: var(--error-color);
 }

@@ -107,7 +107,7 @@
 	dialog {
 		border: none;
 		outline: none;
-		background-color: #333;
+		background-color: var(--card-color);
 		color: inherit;
 		padding: 1rem;
 		border-radius: 0.4rem;
@@ -132,9 +132,5 @@
 		margin-top: 1rem;
 		display: flex;
 		gap: 0.5rem;
-	}
-
-	.error {
-		color: yellow;
 	}
 </style>

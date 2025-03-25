@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte'
+	import { CANVAS_WIDTH } from '$lib/shared/config'
 	import './app.css'
 </script>
 
@@ -9,13 +10,12 @@
 
 <Header />
 
-<main>
+<main style="width: {CANVAS_WIDTH}px">
 	<slot></slot>
 </main>
 
 <style>
 	main {
-		width: 600px;
 		margin-inline: auto;
 	}
 </style>
