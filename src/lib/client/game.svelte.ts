@@ -26,11 +26,11 @@ export class Game {
 		if (this.playing) requestAnimationFrame(() => this.loop())
 	}
 
-	handle_keydown(e: KeyboardEvent) {
+	handle_keydown(key: string) {
 		if (!this.playing) return
-		if (e.key === 'ArrowUp') {
+		if (key === 'ArrowUp') {
 			this.player.move_up()
-		} else if (e.key === 'ArrowDown') {
+		} else if (key === 'ArrowDown') {
 			this.player.move_down()
 		}
 	}

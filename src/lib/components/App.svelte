@@ -36,7 +36,7 @@
 	}
 </script>
 
-<svelte:window onkeydown={game.handle_keydown.bind(game)} />
+<svelte:window onkeydown={(e) => game.handle_keydown(e.key)} />
 
 <menu>
 	<div>Score: {game.score}</div>
