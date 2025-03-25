@@ -13,6 +13,7 @@
 	let board = $state<LeaderBoardType | null>(null)
 
 	const game = new GameClient(ctx)
+	game.draw()
 
 	let leaderboard_status = $state('')
 	let is_open_dialog = $state(false)

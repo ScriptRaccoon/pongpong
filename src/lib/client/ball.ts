@@ -10,7 +10,9 @@ export class Ball {
 		public vx: number = 0,
 		public vy: number = 0,
 		public r: number = 10,
-	) {}
+	) {
+		this.reset()
+	}
 
 	draw(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = 'yellow'
