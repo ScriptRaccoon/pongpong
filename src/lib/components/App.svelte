@@ -20,7 +20,7 @@
 		is_open_dialog = true
 	}
 
-	async function update_leaderboard(message?: string) {
+	async function update_leaderboard() {
 		const res = await fetch('/api/leaderboard')
 		if (res.ok) {
 			const res_json = await res.json()
@@ -28,8 +28,6 @@
 		} else {
 			console.error("Couldn't fetch leaderboard")
 		}
-
-		if (message) leaderboard_status = message
 	}
 
 	function start() {
@@ -49,7 +47,12 @@
 	<LeaderBoard {board} status={leaderboard_status} />
 {/if}
 
-<Form score={game.score} {update_leaderboard} bind:is_open_dialog />
+<Form
+	score={game.score}
+	{update_leaderboard}
+	bind:is_open_dialog
+	bind:leaderboard_status
+/>
 
 <style>
 	menu {

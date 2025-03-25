@@ -6,10 +6,16 @@
 	type Props = {
 		score: number
 		is_open_dialog: boolean
-		update_leaderboard: (message?: string) => Promise<void>
+		update_leaderboard: () => Promise<void>
+		leaderboard_status: string
 	}
 
-	let { score, is_open_dialog = $bindable(), update_leaderboard }: Props = $props()
+	let {
+		score,
+		is_open_dialog = $bindable(),
+		update_leaderboard,
+		leaderboard_status = $bindable(),
+	}: Props = $props()
 
 	let dialog = $state<HTMLDialogElement | null>(null)
 
@@ -49,9 +55,9 @@
 			}
 
 			const res_json = await res.json()
-			const leaderboard_status = res_json?.message ?? ''
+			leaderboard_status = res_json?.message ?? ''
 
-			await update_leaderboard(leaderboard_status)
+			await update_leaderboard()
 
 			close_dialog()
 		} catch (err) {
@@ -90,7 +96,8 @@
 			<button type="submit">Submit</button>
 			<button type="button" onclick={close_dialog}>Cancel</button>
 		</menu>
-		<div class="error" id="form_error">
+
+		<div class="error">
 			{form_error}
 		</div>
 	</form>
