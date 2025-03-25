@@ -67,9 +67,7 @@
 	}
 </script>
 
-{#if is_open_dialog}
-	<Overlay />
-{/if}
+<Overlay show={is_open_dialog} />
 
 <dialog bind:this={dialog} onclose={close}>
 	<form class="form" onsubmit={handle_submit}>
