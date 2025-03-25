@@ -1,5 +1,5 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '$lib/shared/config'
-import { type Player } from './player'
+import { Player } from './player'
 
 type UpdateAction = 'gameover' | 'collision' | null
 
@@ -48,14 +48,14 @@ export class Ball {
 		}
 
 		const collides_with_left_player =
-			this.x - this.r <= player_left.x + player_left.size.x &&
+			this.x - this.r <= player_left.x + Player.size.x &&
 			this.vx < 0 &&
 			this.y >= player_left.y &&
-			this.y <= player_left.y + player_left.size.y
+			this.y <= player_left.y + Player.size.y
 
 		if (collides_with_left_player) {
 			this.vx = -this.vx
-			this.x = player_left.x + player_left.size.x + this.r
+			this.x = player_left.x + Player.size.x + this.r
 			return 'collision'
 		}
 
@@ -63,7 +63,7 @@ export class Ball {
 			this.x + this.r >= player_right.x &&
 			this.vx > 0 &&
 			this.y >= player_right.y &&
-			this.y <= player_right.y + player_right.size.y
+			this.y <= player_right.y + Player.size.y
 
 		if (collides_with_right_player) {
 			this.vx = -this.vx
