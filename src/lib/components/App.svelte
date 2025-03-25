@@ -60,5 +60,6 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: end;
+		margin-bottom: 2rem;
 	}
 </style>
