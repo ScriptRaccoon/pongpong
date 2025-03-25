@@ -12,13 +12,14 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check .",
-		"seed": "tsx scripts/seed.ts"
+		"seed": "NODE_TLS_REJECT_UNAUTHORIZED=0 tsx scripts/seed.ts"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@types/node": "^22.13.13",
+		"dotenv": "^16.4.7",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"svelte": "^5.0.0",

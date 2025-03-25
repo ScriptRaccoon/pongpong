@@ -27,6 +27,9 @@ importers:
       '@types/node':
         specifier: ^22.13.13
         version: 22.13.13
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       prettier:
         specifier: ^3.4.2
         version: 3.5.3
@@ -474,6 +477,10 @@ packages:
 
   devalue@5.1.1:
     resolution: {integrity: sha512-maua5KUiapvEwiEAe+XnlZ3Rh0GD+qI1J/nb9vrJc3muPXvcF/8gXYTWF76+5DAqHyDUtOIImEuo0YKE9mshVw==}
+
+  dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+    engines: {node: '>=12'}
 
   esbuild@0.25.1:
     resolution: {integrity: sha512-BGO5LtrGC7vxnqucAe/rmvKdJllfGaYWdyABvyMoXQlfYMb2bbRuReWR5tEGE//4LcNJj9XrkovTqNYRFZHAMQ==}
@@ -999,6 +1006,8 @@ snapshots:
   detect-libc@2.0.2: {}
 
   devalue@5.1.1: {}
+
+  dotenv@16.4.7: {}
 
   esbuild@0.25.1:
     optionalDependencies:
