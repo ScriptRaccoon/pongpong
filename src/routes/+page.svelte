@@ -73,13 +73,6 @@
 
 <svelte:window onkeydown={handle_keydown} />
 
-<!-- temporary button -->
-<button
-	onclick={() => {
-		fetch('/api/leaderboard', { method: 'DELETE' })
-	}}>Clear leaderboard</button
->
-
 <Game {score} bind:canvas {playing} {handle_start} />
 
 {#if board}

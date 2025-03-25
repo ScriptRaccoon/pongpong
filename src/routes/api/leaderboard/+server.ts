@@ -1,4 +1,4 @@
-import { clear_leaderboard, get_leaderboard, handle_new_score } from '$lib/server/scores'
+import { get_leaderboard, handle_new_score } from '$lib/server/scores'
 import { PostRequestSchema } from '$lib/shared/schemas'
 import type { RequestHandler } from '@sveltejs/kit'
 import { error, json } from '@sveltejs/kit'
@@ -11,12 +11,6 @@ export const GET: RequestHandler = async () => {
 		console.error(err)
 		return error(500, 'Internal server error')
 	}
-}
-
-// temporary endpoint
-export const DELETE: RequestHandler = async () => {
-	await clear_leaderboard()
-	return json({ message: 'Leaderboard cleared' })
 }
 
 export const POST: RequestHandler = async ({ request }) => {
