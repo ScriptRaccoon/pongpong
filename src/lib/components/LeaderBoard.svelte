@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { type LeaderBoardType } from '$lib/shared/schemas'
+	import TextLoader from './TextLoader.svelte'
 
 	type Props = {
-		board: LeaderBoardType
+		board: LeaderBoardType | null
 		status: string
 	}
 
@@ -11,29 +12,33 @@
 
 <section>
 	<h2>Leaderboard</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Rank</th>
-				<th>Name</th>
-				<th>Score</th>
-				<th>Date</th>
-			</tr>
-		</thead>
-		<tbody>
-			{#each board as entry, i}
+	{#if board}
+		<table>
+			<thead>
 				<tr>
-					<td>#{i + 1}</td>
-					<td>{entry.name}</td>
-					<td>{entry.score}</td>
-					<td>{new Date(entry.created_at).toLocaleDateString()}</td>
+					<th>Rank</th>
+					<th>Name</th>
+					<th>Score</th>
+					<th>Date</th>
 				</tr>
-			{/each}
-		</tbody>
-	</table>
-	<div>
-		{status}
-	</div>
+			</thead>
+			<tbody>
+				{#each board as entry, i}
+					<tr>
+						<td>#{i + 1}</td>
+						<td>{entry.name}</td>
+						<td>{entry.score}</td>
+						<td>{new Date(entry.created_at).toLocaleDateString()}</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+		<div>
+			{status}
+		</div>
+	{:else}
+		<TextLoader />
+	{/if}
 </section>
 
 <style>

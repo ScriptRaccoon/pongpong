@@ -2,14 +2,15 @@
 	import { GameClient } from '$lib/client/game.svelte'
 	import Form from '$lib/components/Form.svelte'
 	import LeaderBoard from '$lib/components/LeaderBoard.svelte'
-	import type { LeaderBoardType } from '$lib/shared/schemas'
+	import { LeaderBoardSchema, type LeaderBoardType } from '$lib/shared/schemas'
 
 	type Props = {
 		ctx: CanvasRenderingContext2D
-		board: LeaderBoardType
 	}
 
-	let { board, ctx }: Props = $props()
+	let { ctx }: Props = $props()
+
+	let board = $state<LeaderBoardType | null>(null)
 
 	const game = new GameClient(ctx)
 
@@ -21,12 +22,15 @@
 	}
 
 	async function update_leaderboard() {
-		const res = await fetch('/api/leaderboard')
-		if (res.ok) {
+		try {
+			const res = await fetch('/api/leaderboard')
+			if (!res.ok) {
+				throw new Error("Couldn't fetch leaderboard")
+			}
 			const res_json = await res.json()
-			board = res_json.board
-		} else {
-			console.error("Couldn't fetch leaderboard")
+			board = LeaderBoardSchema.parse(res_json.board)
+		} catch (err) {
+			console.error(err)
 		}
 	}
 
@@ -34,6 +38,10 @@
 		leaderboard_status = ''
 		game.handle_start()
 	}
+
+	$effect(() => {
+		update_leaderboard()
+	})
 </script>
 
 <svelte:window onkeydown={(e) => game.handle_keydown(e.key)} />
@@ -43,9 +51,7 @@
 	<button onclick={start} disabled={game.playing}>Start</button>
 </menu>
 
-{#if board}
-	<LeaderBoard {board} status={leaderboard_status} />
-{/if}
+<LeaderBoard {board} status={leaderboard_status} />
 
 <Form
 	score={game.score}
