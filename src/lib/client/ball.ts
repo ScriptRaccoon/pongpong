@@ -73,4 +73,9 @@ export class Ball {
 
 		return null
 	}
+
+	accelerate() {
+		this.vx *= 1.125
+		this.vy *= 1.125
+	}
 }
