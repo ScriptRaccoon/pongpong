@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { MAX_LEADERBOARD_SIZE } from '$lib/shared/config'
 	import { NameSchema } from '$lib/shared/schemas'
 	import Overlay from './Overlay.svelte'
 
@@ -74,10 +73,7 @@
 		<h2>
 			Submit your score of <span>{score}</span>
 		</h2>
-		<p>
-			Enter your name to save your score to the leaderboard. It will only be added
-			when you reach the top {MAX_LEADERBOARD_SIZE}.
-		</p>
+		<p>Enter your name to save your score to the leaderboard.</p>
 		<div class="group">
 			<label for="name_input">Name</label>
 			<input

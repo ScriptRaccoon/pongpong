@@ -17,6 +17,7 @@
 
 	let leaderboard_status = $state('')
 	let is_open_dialog = $state(false)
+	let first_time = $state(true)
 
 	game.gameover_callback = () => {
 		is_open_dialog = true
@@ -38,6 +39,7 @@
 	function start() {
 		leaderboard_status = ''
 		game.handle_start()
+		first_time = false
 	}
 
 	$effect(() => {
@@ -49,7 +51,9 @@
 
 <menu>
 	<div>Score: {game.score}</div>
-	<button onclick={start} disabled={game.playing}>Start</button>
+	<button onclick={start} disabled={game.playing} class:attention={first_time}>
+		Start
+	</button>
 </menu>
 
 <LeaderBoard {board} status={leaderboard_status} />
