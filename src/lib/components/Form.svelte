@@ -60,8 +60,6 @@
 			form_error = 'Failed to submit score'
 		}
 	}
-
-	$inspect(is_open_dialog)
 </script>
 
 {#if is_open_dialog}

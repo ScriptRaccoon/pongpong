@@ -5,7 +5,6 @@
 	import Game from '$lib/components/Game.svelte'
 	import Header from '$lib/components/Header.svelte'
 	import LeaderBoard from '$lib/components/LeaderBoard.svelte'
-	import { CANVAS_HEIGHT, CANVAS_WIDTH } from '$lib/shared/config'
 	import './app.css'
 
 	let { data } = $props()
@@ -18,13 +17,6 @@
 	let playing = $state(false)
 	let leaderboard_status = $state('')
 	let is_open_dialog = $state(false)
-
-	$effect(() => {
-		if (canvas) {
-			canvas.width = CANVAS_WIDTH
-			canvas.height = CANVAS_HEIGHT
-		}
-	})
 
 	async function update_leaderboard(message?: string) {
 		const res = await fetch('/api/leaderboard')
