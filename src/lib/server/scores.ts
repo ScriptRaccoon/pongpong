@@ -1,6 +1,7 @@
-import { type LeaderBoardType, LeaderBoardSchema } from '../shared/schemas'
-import { MAX_LEADERBOARD_SIZE } from '../shared/config'
+import { type LeaderBoardType, LeaderBoardSchema } from '$lib/shared/schemas'
+import { MAX_LEADERBOARD_SIZE } from '$lib/shared/config'
 import { turso } from './turso'
+import { is_score_good_enough } from '$lib/shared/utils'
 
 export async function get_leaderboard(): Promise<LeaderBoardType> {
 	const sql = 'SELECT * FROM leaderboard ORDER BY score DESC'
@@ -41,18 +42,6 @@ async function add_score(name: string, score: number): Promise<{ added: boolean 
 		console.error(error)
 		return { added: false }
 	}
-}
-
-function is_score_good_enough(score: number, leaderboard: LeaderBoardType): boolean {
-	if (leaderboard.length < MAX_LEADERBOARD_SIZE) {
-		return true
-	}
-
-	const minimal_score = leaderboard.length
-		? Math.min(...leaderboard.map((score) => score.score))
-		: 0
-
-	return score > minimal_score
 }
 
 async function remove_worst_from_leaderboard(

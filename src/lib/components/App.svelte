@@ -3,6 +3,7 @@
 	import Form from '$lib/components/Form.svelte'
 	import LeaderBoard from '$lib/components/LeaderBoard.svelte'
 	import { LeaderBoardSchema, type LeaderBoardType } from '$lib/shared/schemas'
+	import { is_score_good_enough } from '$lib/shared/utils'
 
 	type Props = {
 		ctx: CanvasRenderingContext2D
@@ -20,7 +21,9 @@
 	let first_time = $state(true)
 
 	game.gameover_callback = () => {
-		is_open_dialog = true
+		if (!board || is_score_good_enough(game.score, board)) {
+			is_open_dialog = true
+		}
 	}
 
 	async function update_leaderboard() {
