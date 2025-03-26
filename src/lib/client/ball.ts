@@ -25,8 +25,9 @@ export class Ball {
 	public reset() {
 		this.x = CANVAS_WIDTH / 2
 		this.y = CANVAS_HEIGHT / 2
-		this.vx = 2 + Math.random()
-		this.vy = 2 * (Math.random() - 0.5)
+		const angle = 0.5 * (Math.random() - 0.5) * Math.PI
+		this.vx = 2 * Math.cos(angle)
+		this.vy = 2 * Math.sin(angle)
 	}
 
 	public update(player_left: Player, player_right: Player): UpdateAction {
