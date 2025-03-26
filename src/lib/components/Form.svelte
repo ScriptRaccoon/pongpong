@@ -79,7 +79,12 @@
 
 <Overlay show={is_open_dialog} />
 
-<dialog bind:this={dialog} onclose={close}>
+<dialog
+	bind:this={dialog}
+	onclose={() => {
+		is_open_dialog = false
+	}}
+>
 	<form class="form" onsubmit={handle_submit}>
 		<h2>
 			Submit your score of <span>{score}</span>
