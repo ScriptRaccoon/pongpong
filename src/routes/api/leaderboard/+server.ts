@@ -15,20 +15,15 @@ export const GET: RequestHandler = async () => {
 
 export const POST: RequestHandler = async ({ request }) => {
 	const body = await request.json()
-	const name: unknown = body?.name
-	const score: unknown = body?.score
-
-	const result = PostRequestSchema.safeParse({ name, score })
+	const result = PostRequestSchema.safeParse(body)
 
 	if (result.error) {
-		const messages = result.error.errors.map((error) => error.message).join(', ')
-		return error(400, messages)
+		const message = result.error.errors.map((error) => error.message).join(', ')
+		return error(400, message)
 	}
 
-	const { data } = result
-
 	try {
-		const { message } = await handle_new_score(data.name, data.score)
+		const { message } = await handle_new_score(result.data.name, result.data.score)
 		return json({ message })
 	} catch (err) {
 		console.error(err)
