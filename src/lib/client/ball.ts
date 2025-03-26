@@ -31,6 +31,10 @@ export class Ball {
 	}
 
 	public update(player_left: Player, player_right: Player): UpdateAction {
+		if (this.vx === 0) {
+			this.vx = 0.2 * (Math.random() - 0.5)
+		}
+
 		this.x += this.vx
 		this.y += this.vy
 
