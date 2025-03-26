@@ -4,7 +4,7 @@ PongPong is a simple browser-based game with a leaderboard. The leaderboard is s
 
 <https://pongpong-game.netlify.app/>
 
-**Note:** Currently, there are no measures in place to prevent cheating.
+**Note:** Currently, there are no measures in place to prevent cheating. We trust you ;).
 
 <img width="500" alt="pongpong-screenshot" src="https://github.com/user-attachments/assets/0026e872-8a80-4dc9-9013-eecb0e53286d" />
 
