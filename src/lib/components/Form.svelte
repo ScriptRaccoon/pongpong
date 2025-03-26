@@ -21,6 +21,7 @@
 	let name = $state('')
 	let name_error = $state('')
 	let form_error = $state('')
+	let disabled = $state(false)
 
 	$effect(() => {
 		if (is_open_dialog) dialog?.showModal()
@@ -33,12 +34,16 @@
 
 	async function handle_submit(event: SubmitEvent) {
 		event.preventDefault()
+		if (disabled) return
+
 		name_error = ''
+		disabled = true
 
 		const { error } = NameSchema.safeParse(name)
 
 		if (error) {
 			name_error = error.errors[0]?.message ?? ''
+			disabled = false
 			return
 		}
 
@@ -63,6 +68,8 @@
 			console.error(err)
 			form_error = 'Failed to submit score'
 		}
+
+		disabled = false
 	}
 </script>
 
@@ -87,7 +94,7 @@
 			</div>
 		</div>
 		<menu>
-			<button type="submit">Submit</button>
+			<button type="submit" {disabled}>Submit</button>
 			<button type="button" onclick={close_dialog}>Cancel</button>
 		</menu>
 
