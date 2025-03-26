@@ -39,13 +39,19 @@ export class Game {
 		else if (action === 'gameover') this.handle_gameover()
 	}
 
+	get entities() {
+		return [
+			this.player_left,
+			this.player_right,
+			this.ball,
+			...this.deviators,
+			...this.accelerators,
+		]
+	}
+
 	public draw() {
 		clear_canvas(this.ctx)
-		this.deviators.forEach((deviator) => deviator.draw(this.ctx))
-		this.accelerators.forEach((accelerator) => accelerator.draw(this.ctx))
-		this.player_left.draw(this.ctx)
-		this.player_right.draw(this.ctx)
-		this.ball.draw(this.ctx)
+		this.entities.forEach((entity) => entity.draw(this.ctx))
 	}
 
 	public loop() {
