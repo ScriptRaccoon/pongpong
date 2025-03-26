@@ -22,6 +22,7 @@
 	let name_error = $state('')
 	let form_error = $state('')
 	let disabled = $state(false)
+	let form_status = $state('')
 
 	$effect(() => {
 		if (is_open_dialog) dialog?.showModal()
@@ -37,6 +38,7 @@
 		if (disabled) return
 
 		name_error = ''
+		form_status = 'Sending...'
 		disabled = true
 
 		const { error } = NameSchema.safeParse(name)
@@ -44,6 +46,7 @@
 		if (error) {
 			name_error = error.errors[0]?.message ?? ''
 			disabled = false
+			form_status = ''
 			return
 		}
 
@@ -70,6 +73,7 @@
 		}
 
 		disabled = false
+		form_status = ''
 	}
 </script>
 
@@ -101,6 +105,10 @@
 		<div class="error">
 			{form_error}
 		</div>
+
+		<div aria-live="polite">
+			{form_status}
+		</div>
 	</form>
 </dialog>
 
@@ -130,7 +138,7 @@
 	}
 
 	menu {
-		margin-top: 1rem;
+		margin-block: 1rem;
 		display: flex;
 		gap: 0.5rem;
 	}
