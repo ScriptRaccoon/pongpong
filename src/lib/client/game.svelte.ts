@@ -54,13 +54,7 @@ export class Game {
 	}
 
 	public handle_keydown(key: string) {
-		if (!this.playing) {
-			if (key === ' ') {
-				this.handle_start()
-			}
-			return
-		}
-
+		if (!this.playing) return
 		const acting_player = this.ball.vx < 0 ? this.player_left : this.player_right
 		if (key === 'ArrowUp') {
 			acting_player.move_up()
