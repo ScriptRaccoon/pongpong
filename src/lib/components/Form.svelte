@@ -93,7 +93,7 @@
 				aria-describedby="name_error"
 				bind:value={name}
 			/>
-			<div class="error" id="name_error">
+			<div class="error" id="name_error" aria-live="polite">
 				{name_error}
 			</div>
 		</div>
@@ -102,7 +102,7 @@
 			<button type="button" onclick={close_dialog}>Cancel</button>
 		</menu>
 
-		<div class="error">
+		<div class="error" aria-live="polite">
 			{form_error}
 		</div>
 
