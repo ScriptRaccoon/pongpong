@@ -1,20 +1,15 @@
 <script lang="ts">
-	import { Game } from '$lib/client/game.svelte'
+	import { type Game } from '$lib/client/game.svelte'
 	import Form from '$lib/components/Form.svelte'
 	import LeaderBoard from '$lib/components/LeaderBoard.svelte'
 	import { LeaderBoardSchema, type LeaderBoardType } from '$lib/shared/schemas'
 	import { is_score_good_enough } from '$lib/shared/utils'
 
-	type Props = {
-		ctx: CanvasRenderingContext2D
-	}
+	type Props = { game: Game }
 
-	let { ctx }: Props = $props()
+	let { game }: Props = $props()
 
 	let board = $state<LeaderBoardType | null>(null)
-
-	const game = new Game(ctx)
-	game.draw()
 
 	let leaderboard_status = $state('')
 	let is_open_dialog = $state(false)

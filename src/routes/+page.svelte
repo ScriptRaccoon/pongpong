@@ -1,18 +1,25 @@
 <script lang="ts">
+	import { Game } from '$lib/client/game.svelte'
 	import App from '$lib/components/App.svelte'
 	import Instructions from '$lib/components/Instructions.svelte'
 	import { CANVAS_HEIGHT, CANVAS_WIDTH } from '$lib/shared/config.js'
 
-	let canvas = $state<HTMLCanvasElement | null>(null)
-	let ctx = $derived(canvas?.getContext('2d') ?? null)
+	let game: Game | null = null
+
+	function create_game(canvas: HTMLCanvasElement) {
+		const ctx = canvas.getContext('2d')
+		if (!ctx) throw new Error('Could not get 2d context')
+		game = new Game(ctx)
+		game.draw()
+	}
 </script>
 
 <Instructions />
 
-<canvas width={CANVAS_WIDTH} height={CANVAS_HEIGHT} bind:this={canvas}></canvas>
+<canvas width={CANVAS_WIDTH} height={CANVAS_HEIGHT} use:create_game></canvas>
 
-{#if ctx}
-	<App {ctx} />
+{#if game}
+	<App {game} />
 {/if}
 
 <style>
