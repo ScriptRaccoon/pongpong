@@ -1,11 +1,14 @@
-import { get_leaderboard, handle_new_score } from '$lib/server/scores'
+import { ScoreService } from '$lib/server/ScoreService'
+import { turso } from '$lib/server/turso'
 import { PostRequestSchema } from '$lib/shared/schemas'
 import type { RequestHandler } from '@sveltejs/kit'
 import { error, json } from '@sveltejs/kit'
 
+const score_service = new ScoreService(turso)
+
 export const GET: RequestHandler = async () => {
 	try {
-		const board = await get_leaderboard()
+		const board = await score_service.get_leaderboard()
 		return json({ board })
 	} catch (err) {
 		console.error(err)
@@ -23,7 +26,10 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	try {
-		const { message } = await handle_new_score(result.data.name, result.data.score)
+		const { message } = await score_service.submit_score(
+			result.data.name,
+			result.data.score,
+		)
 		return json({ message })
 	} catch (err) {
 		console.error(err)
