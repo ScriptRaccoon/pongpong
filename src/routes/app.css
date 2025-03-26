@@ -28,7 +28,7 @@ button {
 	color: var(--text-color);
 	border: none;
 	cursor: pointer;
-	padding: 0.2rem 0.4rem;
+	padding: 0.2rem 0.6rem;
 	font-weight: 500;
 	border-radius: 3px;
 }
