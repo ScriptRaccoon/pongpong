@@ -39,6 +39,7 @@
 
 		name_error = ''
 		form_status = 'Sending...'
+		scores_status = ''
 		disabled = true
 
 		const { error } = NameSchema.safeParse(name)
