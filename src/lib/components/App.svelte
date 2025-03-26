@@ -53,7 +53,12 @@
 <svelte:window onkeydown={(e) => game.handle_keydown(e.key)} />
 
 <menu>
-	<div>Score: {game.score}</div>
+	<div>
+		Score: {game.score}
+		{#if game.gameover}
+			&ndash; Game Over
+		{/if}
+	</div>
 	<button onclick={start} disabled={game.playing} class:attention={first_time}>
 		Start
 	</button>

@@ -8,6 +8,7 @@ import { Player } from './player'
 export class Game {
 	public score = $state(0)
 	public playing = $state(false)
+	public gameover = $state(false)
 	public ball: Ball
 	public player_left: Player
 	public player_right: Player
@@ -58,6 +59,7 @@ export class Game {
 		this.deviators = []
 		this.accelerators = []
 		this.playing = true
+		this.gameover = false
 		this.loop()
 	}
 
@@ -73,6 +75,7 @@ export class Game {
 
 	handle_gameover() {
 		this.playing = false
+		this.gameover = true
 		this.gameover_callback?.()
 	}
 }
