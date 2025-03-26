@@ -1,4 +1,4 @@
-# PongPong Game with Leaderboard
+# PongPong Game
 
 This is a basic browser game with a leaderboard. The latter is stored in a database on [turso](https://turso.tech/). It is mainly an illustration of using turso within SvelteKit.
 
@@ -21,7 +21,5 @@ To start the server, run
 For development, use
 
 `pnpm dev`
-
-To build the client code, use `pnpm build:client`, or `pnpm dev:client` for development.
 
 To seed the database, use `pnpm seed`. This creates the leaderboard table.
