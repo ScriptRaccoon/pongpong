@@ -13,9 +13,7 @@ export function is_score_good_enough(
 		return true
 	}
 
-	const minimal_score = leaderboard.length
-		? Math.min(...leaderboard.map((score) => score.score))
-		: 0
+	const minimal_score = Math.min(...leaderboard.map((score) => score.score))
 
 	return score > minimal_score
 }
