@@ -9,6 +9,7 @@ export class Game {
 	public score = $state(0)
 	public playing = $state(false)
 	public gameover = $state(false)
+	public paused = $state(false)
 	private ctx: CanvasRenderingContext2D
 	private ball: Ball = new Ball()
 	private player_left: Player = new Player(50)
@@ -50,7 +51,7 @@ export class Game {
 	public loop() {
 		this.update()
 		this.draw()
-		if (this.playing) requestAnimationFrame(() => this.loop())
+		if (this.playing && !this.paused) requestAnimationFrame(() => this.loop())
 	}
 
 	public handle_keydown(key: string) {
@@ -93,5 +94,11 @@ export class Game {
 
 	public on_gameover(callback: () => void) {
 		this.gameover_callback = callback
+	}
+
+	public toggle_pause() {
+		if (!this.playing) return
+		this.paused = !this.paused
+		if (!this.paused) this.loop()
 	}
 }

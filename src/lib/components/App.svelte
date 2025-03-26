@@ -59,6 +59,13 @@
 			&ndash; Game Over
 		{/if}
 	</div>
+	<button disabled={!game.playing} onclick={() => game.toggle_pause()}>
+		{#if game.paused}
+			Resume
+		{:else}
+			Pause
+		{/if}
+	</button>
 	<button onclick={start} disabled={game.playing} class:attention={first_time}>
 		Start
 	</button>
@@ -76,9 +83,9 @@
 <style>
 	menu {
 		padding-block: 0.5rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: end;
+		display: grid;
+		grid-template-columns: 1fr auto auto;
+		gap: 1rem;
 		margin-bottom: 2rem;
 	}
 </style>
