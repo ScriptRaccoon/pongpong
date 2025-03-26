@@ -3,11 +3,9 @@ import { distance } from '$lib/shared/utils'
 import type { Ball } from './ball'
 
 export class Accelerator {
-	private static COLLISION_TIMEOUT = 1000
 	private r = 4
 	private x = Math.random() * CANVAS_WIDTH
 	private y = Math.random() * CANVAS_WIDTH
-	private active_collisions: Ball[] = []
 
 	public draw(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = 'orangered'
@@ -17,18 +15,10 @@ export class Accelerator {
 		ctx.closePath()
 	}
 
-	public handle_collison(ball: Ball) {
-		if (this.active_collisions.includes(ball)) return
-
+	public is_colliding(ball: Ball): boolean {
 		const collides = distance(this.x, this.y, ball.x, ball.y) < this.r + ball.r
-		if (!collides) return
-
-		this.active_collisions.push(ball)
-
+		if (!collides) return false
 		ball.accelerate()
-
-		setTimeout(() => {
-			this.active_collisions = this.active_collisions.filter((b) => b !== ball)
-		}, Accelerator.COLLISION_TIMEOUT)
+		return true
 	}
 }
