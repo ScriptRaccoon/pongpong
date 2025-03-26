@@ -49,6 +49,7 @@ export class Ball {
 
 		const collides_with_left_player =
 			this.x - this.r <= player_left.x + Player.SIZE.x &&
+			this.x >= player_left.x + Player.SIZE.x &&
 			this.vx < 0 &&
 			this.y >= player_left.y &&
 			this.y <= player_left.y + Player.SIZE.y
@@ -61,6 +62,7 @@ export class Ball {
 
 		const collides_with_right_player =
 			this.x + this.r >= player_right.x &&
+			this.x <= player_right.x &&
 			this.vx > 0 &&
 			this.y >= player_right.y &&
 			this.y <= player_right.y + Player.SIZE.y
