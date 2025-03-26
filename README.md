@@ -4,6 +4,8 @@ This is a basic browser game with a leaderboard. The latter is stored in a datab
 
 **Notice.** Currently, there is no protection against cheating.
 
+<img  width="500" alt="pongpong-screenshot" src="https://github.com/user-attachments/assets/0026e872-8a80-4dc9-9013-eecb0e53286d" />
+
 ## Setup
 
 Create a database at turso and add the credentials to `.env`. Use `.env.example` as guidance.
