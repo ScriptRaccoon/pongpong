@@ -61,12 +61,11 @@
 				throw new Error('Failed to submit score')
 			}
 
-			const res_json = await res.json()
-			leaderboard_status = res_json?.message ?? ''
-
+			close_dialog()
 			await update_leaderboard()
 
-			close_dialog()
+			const res_json = await res.json()
+			leaderboard_status = res_json?.message ?? ''
 		} catch (err) {
 			console.error(err)
 			form_error = 'Failed to submit score'
