@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { GameClient } from '$lib/client/game.svelte'
+	import { Game } from '$lib/client/game.svelte'
 	import Form from '$lib/components/Form.svelte'
 	import LeaderBoard from '$lib/components/LeaderBoard.svelte'
 	import { LeaderBoardSchema, type LeaderBoardType } from '$lib/shared/schemas'
@@ -13,18 +13,18 @@
 
 	let board = $state<LeaderBoardType | null>(null)
 
-	const game = new GameClient(ctx)
+	const game = new Game(ctx)
 	game.draw()
 
 	let leaderboard_status = $state('')
 	let is_open_dialog = $state(false)
 	let first_time = $state(true)
 
-	game.gameover_callback = () => {
+	game.on_gameover(() => {
 		if (!board || is_score_good_enough(game.score, board)) {
 			is_open_dialog = true
 		}
-	}
+	})
 
 	async function update_leaderboard() {
 		try {

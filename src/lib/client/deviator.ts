@@ -3,17 +3,14 @@ import { distance, rotate } from '$lib/shared/utils'
 import type { Ball } from './ball'
 
 export class Deviator {
-	static COLLISION_TIMEOUT = 1000
+	private static COLLISION_TIMEOUT = 1000
+	private r = 6
+	private x = Math.random() * CANVAS_WIDTH
+	private y = Math.random() * CANVAS_WIDTH
+	private angle = Math.random() * Math.PI * 2
+	private active_collisions: Ball[] = []
 
-	constructor(
-		private r = 6,
-		private x = Math.random() * CANVAS_WIDTH,
-		private y = Math.random() * CANVAS_WIDTH,
-		private angle = Math.random() * Math.PI * 2,
-		private active_collisions: Ball[] = [],
-	) {}
-
-	draw(ctx: CanvasRenderingContext2D) {
+	public draw(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = 'skyblue'
 		ctx.beginPath()
 		ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2)
@@ -21,7 +18,7 @@ export class Deviator {
 		ctx.closePath()
 	}
 
-	handle_collison(ball: Ball) {
+	public handle_collison(ball: Ball) {
 		if (this.active_collisions.includes(ball)) return
 
 		const collides = distance(this.x, this.y, ball.x, ball.y) < this.r + ball.r
@@ -37,7 +34,7 @@ export class Deviator {
 		}, Deviator.COLLISION_TIMEOUT)
 	}
 
-	deviate(ball: Ball): void {
+	private deviate(ball: Ball): void {
 		const vel = rotate(ball.vx, ball.vy, this.angle)
 		ball.vx = vel[0]
 		ball.vy = vel[1]

@@ -1,19 +1,21 @@
 import { CANVAS_HEIGHT } from '$lib/shared/config'
 
 export class Player {
-	static MAX_VELOCITY = 7
-	static FRICTION = 0.9
-	static size = { x: 20, y: 100 }
+	private static MAX_VELOCITY = 7
+	private static FRICTION = 0.9
+	public static SIZE = { x: 20, y: 100 }
 
 	constructor(
 		public readonly x: number,
-		public y: number = CANVAS_HEIGHT / 2 - Player.size.y / 2,
+		public y: number = 0,
 		public vy: number = 0,
-	) {}
+	) {
+		this.reset()
+	}
 
 	draw(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = 'white'
-		ctx.fillRect(this.x, this.y, Player.size.x, Player.size.y)
+		ctx.fillRect(this.x, this.y, Player.SIZE.x, Player.SIZE.y)
 	}
 
 	update() {
@@ -29,8 +31,8 @@ export class Player {
 			this.vy = 0
 		}
 
-		if (this.y > CANVAS_HEIGHT - Player.size.y) {
-			this.y = CANVAS_HEIGHT - Player.size.y
+		if (this.y > CANVAS_HEIGHT - Player.SIZE.y) {
+			this.y = CANVAS_HEIGHT - Player.SIZE.y
 			this.vy = 0
 		}
 	}
@@ -44,7 +46,7 @@ export class Player {
 	}
 
 	reset() {
-		this.y = CANVAS_HEIGHT / 2 - Player.size.y / 2
+		this.y = CANVAS_HEIGHT / 2 - Player.SIZE.y / 2
 		this.vy = 0
 	}
 }

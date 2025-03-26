@@ -9,20 +9,19 @@ export class Game {
 	public score = $state(0)
 	public playing = $state(false)
 	public gameover = $state(false)
-	public ball: Ball
-	public player_left: Player
-	public player_right: Player
-	public gameover_callback?: () => void
-	public deviators: Deviator[] = []
-	public accelerators: Accelerator[] = []
+	private ctx: CanvasRenderingContext2D
+	private ball: Ball = new Ball()
+	private player_left: Player = new Player(50)
+	private player_right: Player = new Player(CANVAS_WIDTH - 50 - Player.SIZE.x)
+	private gameover_callback?: () => void
+	private deviators: Deviator[] = []
+	private accelerators: Accelerator[] = []
 
-	constructor() {
-		this.ball = new Ball()
-		this.player_left = new Player(50)
-		this.player_right = new Player(CANVAS_WIDTH - 50 - 20)
+	constructor(ctx: CanvasRenderingContext2D) {
+		this.ctx = ctx
 	}
 
-	update() {
+	public update() {
 		this.player_left.update()
 		this.player_right.update()
 		this.deviators.forEach((deviator) => {
@@ -36,12 +35,22 @@ export class Game {
 		else if (action === 'gameover') this.handle_gameover()
 	}
 
-	loop() {
+	public draw() {
+		clear_canvas(this.ctx)
+		this.deviators.forEach((deviator) => deviator.draw(this.ctx))
+		this.accelerators.forEach((accelerator) => accelerator.draw(this.ctx))
+		this.player_left.draw(this.ctx)
+		this.player_right.draw(this.ctx)
+		this.ball.draw(this.ctx)
+	}
+
+	public loop() {
 		this.update()
+		this.draw()
 		if (this.playing) requestAnimationFrame(() => this.loop())
 	}
 
-	handle_keydown(key: string) {
+	public handle_keydown(key: string) {
 		if (!this.playing) return
 		const acting_player = this.ball.vx < 0 ? this.player_left : this.player_right
 		if (key === 'ArrowUp') {
@@ -51,7 +60,7 @@ export class Game {
 		}
 	}
 
-	handle_start() {
+	public handle_start() {
 		this.score = 0
 		this.ball.reset()
 		this.player_left.reset()
@@ -63,7 +72,7 @@ export class Game {
 		this.loop()
 	}
 
-	handle_collision() {
+	private handle_collision() {
 		this.score++
 		if (Math.random() < 0.1) {
 			this.deviators.push(new Deviator())
@@ -73,30 +82,13 @@ export class Game {
 		}
 	}
 
-	handle_gameover() {
+	private handle_gameover() {
 		this.playing = false
 		this.gameover = true
 		this.gameover_callback?.()
 	}
-}
 
-export class GameClient extends Game {
-	constructor(private ctx: CanvasRenderingContext2D) {
-		super()
-	}
-
-	draw() {
-		clear_canvas(this.ctx)
-		this.deviators.forEach((deviator) => deviator.draw(this.ctx))
-		this.accelerators.forEach((accelerator) => accelerator.draw(this.ctx))
-		this.player_left.draw(this.ctx)
-		this.player_right.draw(this.ctx)
-		this.ball.draw(this.ctx)
-	}
-
-	loop() {
-		this.update()
-		this.draw()
-		if (this.playing) requestAnimationFrame(() => this.loop())
+	public on_gameover(callback: () => void) {
+		this.gameover_callback = callback
 	}
 }

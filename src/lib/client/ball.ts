@@ -4,17 +4,17 @@ import { Player } from './player'
 type UpdateAction = 'gameover' | 'collision' | null
 
 export class Ball {
-	constructor(
-		public x: number = 0,
-		public y: number = 0,
-		public vx: number = 0,
-		public vy: number = 0,
-		public r: number = 10,
-	) {
+	public x: number = 0
+	public y: number = 0
+	public vx: number = 0
+	public vy: number = 0
+	public r: number = 10
+
+	constructor() {
 		this.reset()
 	}
 
-	draw(ctx: CanvasRenderingContext2D) {
+	public draw(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = 'yellow'
 		ctx.beginPath()
 		ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2)
@@ -22,14 +22,14 @@ export class Ball {
 		ctx.closePath()
 	}
 
-	reset() {
+	public reset() {
 		this.x = CANVAS_WIDTH / 2
 		this.y = CANVAS_HEIGHT / 2
 		this.vx = 2 + Math.random()
 		this.vy = 2 * (Math.random() - 0.5)
 	}
 
-	update(player_left: Player, player_right: Player): UpdateAction {
+	public update(player_left: Player, player_right: Player): UpdateAction {
 		this.x += this.vx
 		this.y += this.vy
 
@@ -48,14 +48,14 @@ export class Ball {
 		}
 
 		const collides_with_left_player =
-			this.x - this.r <= player_left.x + Player.size.x &&
+			this.x - this.r <= player_left.x + Player.SIZE.x &&
 			this.vx < 0 &&
 			this.y >= player_left.y &&
-			this.y <= player_left.y + Player.size.y
+			this.y <= player_left.y + Player.SIZE.y
 
 		if (collides_with_left_player) {
 			this.vx = -this.vx
-			this.x = player_left.x + Player.size.x + this.r
+			this.x = player_left.x + Player.SIZE.x + this.r
 			return 'collision'
 		}
 
@@ -63,7 +63,7 @@ export class Ball {
 			this.x + this.r >= player_right.x &&
 			this.vx > 0 &&
 			this.y >= player_right.y &&
-			this.y <= player_right.y + Player.size.y
+			this.y <= player_right.y + Player.SIZE.y
 
 		if (collides_with_right_player) {
 			this.vx = -this.vx
@@ -74,7 +74,7 @@ export class Ball {
 		return null
 	}
 
-	accelerate() {
+	public accelerate() {
 		this.vx *= 1.125
 		this.vy *= 1.125
 	}
