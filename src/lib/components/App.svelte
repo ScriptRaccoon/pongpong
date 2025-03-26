@@ -1,47 +1,47 @@
 <script lang="ts">
 	import { type Game } from '$lib/client/game.svelte'
 	import Form from '$lib/components/Form.svelte'
-	import LeaderBoard from '$lib/components/LeaderBoard.svelte'
-	import { LeaderBoardSchema, type LeaderBoardType } from '$lib/shared/schemas'
-	import { is_score_good_enough } from '$lib/shared/utils'
+	import Scores from '$lib/components/Scores.svelte'
+	import { LEADERBOARD_SIZE } from '$lib/shared/config'
+	import { ScoreListSchema, type ScoreList } from '$lib/shared/schemas'
 
 	type Props = { game: Game }
 
 	let { game }: Props = $props()
 
-	let board = $state<LeaderBoardType | null>(null)
+	let scores = $state<ScoreList | null>(null)
 
-	let leaderboard_status = $state('')
+	let scores_status = $state('')
 	let is_open_dialog = $state(false)
 	let first_time = $state(true)
+	let show_all_scores = $state(false)
 
 	game.on_gameover(() => {
-		if (!board || is_score_good_enough(game.score, board)) {
-			is_open_dialog = true
-		}
+		if (game.score > 0) is_open_dialog = true
 	})
 
-	async function update_leaderboard() {
+	async function update_scores(show_all: boolean = true) {
 		try {
-			const res = await fetch('/api/leaderboard')
+			const url = show_all ? '/api/scores' : `/api/scores?limit=${LEADERBOARD_SIZE}`
+			const res = await fetch(url)
 			if (!res.ok) {
-				throw new Error("Couldn't fetch leaderboard")
+				throw new Error("Couldn't fetch scores")
 			}
 			const res_json = await res.json()
-			board = LeaderBoardSchema.parse(res_json.board)
+			scores = ScoreListSchema.parse(res_json.scores)
 		} catch (err) {
 			console.error(err)
 		}
 	}
 
 	function start() {
-		leaderboard_status = ''
+		scores_status = ''
 		game.handle_start()
 		first_time = false
 	}
 
 	$effect(() => {
-		update_leaderboard()
+		update_scores(show_all_scores)
 	})
 </script>
 
@@ -66,13 +66,13 @@
 	</button>
 </menu>
 
-<LeaderBoard {board} status={leaderboard_status} />
+<Scores {scores} status={scores_status} bind:show_all={show_all_scores} />
 
 <Form
 	score={game.score}
-	{update_leaderboard}
+	update_scores={() => update_scores(show_all_scores)}
 	bind:is_open_dialog
-	bind:leaderboard_status
+	bind:scores_status
 />
 
 <style>

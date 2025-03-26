@@ -12,7 +12,7 @@ const turso = createClient({
 
 const sql = `
 CREATE TABLE
-    IF NOT EXISTS leaderboard (
+    IF NOT EXISTS scores (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         score INTEGER NOT NULL,

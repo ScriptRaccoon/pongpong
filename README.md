@@ -15,7 +15,9 @@ PongPong is a simple browser-based game with a leaderboard. The leaderboard is s
 3. Each successful hit of the ball increases the score.
 4. Periodically, _deviators_ (blue cells) appear. These cells alter the ball's direction by a specific angle (unique to each deviator) when the ball crosses them. Each time this happens, the deviator grows in size.
 5. Periodically, _accelerators_ (red cells) appear. These cells increase the ball's speed when the ball crosses them. Once activated, the accelerator is removed.
-6. The top 5 scores are recorded on the leaderboard.
+6. All scores\* are recorded on the leaderboard, which defaults to 5 entries but can be expanded to show all entries.
+
+\*We decided to store _all_ scores instead of always just keeping the 5 best ones in the database so that the number can be changed at any time in the future and also since, say, one could retrieve the best 5 scores of the last week.
 
 ## Setup
 
@@ -32,7 +34,7 @@ pnpm install
 
 ### Seeding the database
 
-To seed the database and create the leaderboard table, run:
+To seed the database and create the scores table, run:
 
 ```bash
 pnpm seed

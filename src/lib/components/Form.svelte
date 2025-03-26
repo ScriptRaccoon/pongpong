@@ -5,15 +5,15 @@
 	type Props = {
 		score: number
 		is_open_dialog: boolean
-		update_leaderboard: () => Promise<void>
-		leaderboard_status: string
+		update_scores: () => Promise<void>
+		scores_status: string
 	}
 
 	let {
 		score,
 		is_open_dialog = $bindable(),
-		update_leaderboard,
-		leaderboard_status = $bindable(),
+		update_scores,
+		scores_status = $bindable(),
 	}: Props = $props()
 
 	let dialog = $state<HTMLDialogElement | null>(null)
@@ -51,7 +51,7 @@
 		}
 
 		try {
-			const res = await fetch('/api/leaderboard', {
+			const res = await fetch('/api/scores', {
 				method: 'POST',
 				body: JSON.stringify({ name, score }),
 				headers: { 'Content-Type': 'application/json' },
@@ -62,10 +62,10 @@
 			}
 
 			close_dialog()
-			await update_leaderboard()
+			await update_scores()
 
 			const res_json = await res.json()
-			leaderboard_status = res_json?.message ?? ''
+			scores_status = res_json?.message ?? ''
 		} catch (err) {
 			console.error(err)
 			form_error = 'Failed to submit score'
@@ -83,7 +83,7 @@
 		<h2>
 			Submit your score of <span>{score}</span>
 		</h2>
-		<p>Enter your name to save your score to the leaderboard.</p>
+		<p>Enter your name to save your score.</p>
 		<div class="group">
 			<label for="name_input">Name</label>
 			<input

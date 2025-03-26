@@ -1,18 +1,27 @@
 <script lang="ts">
-	import { type LeaderBoardType } from '$lib/shared/schemas'
+	import { type ScoreList } from '$lib/shared/schemas'
 	import TextLoader from './TextLoader.svelte'
 
 	type Props = {
-		board: LeaderBoardType | null
+		scores: ScoreList | null
 		status: string
+		show_all: boolean
 	}
 
-	let { board, status }: Props = $props()
+	let { scores, status, show_all = $bindable() }: Props = $props()
+
+	let title = $derived(show_all ? 'All scores' : 'Leaderboard')
 </script>
 
 <section>
-	<h2>Leaderboard</h2>
-	{#if board}
+	<header>
+		<h2>{title}</h2>
+		<label>
+			Show all scores
+			<input type="checkbox" bind:checked={show_all} />
+		</label>
+	</header>
+	{#if scores}
 		<table>
 			<thead>
 				<tr>
@@ -23,7 +32,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each board as entry, i}
+				{#each scores as entry, i}
 					<tr>
 						<td>#{i + 1}</td>
 						<td>{entry.name}</td>
@@ -61,5 +70,16 @@
 
 	tr:nth-child(even) {
 		background-color: var(--secondary-bg-color);
+	}
+
+	header,
+	label {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	label {
+		gap: 0.5rem;
 	}
 </style>

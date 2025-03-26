@@ -20,6 +20,7 @@ body {
 	color: var(--text-color);
 	font-family: Arial, Helvetica, sans-serif;
 	line-height: 1.4;
+	padding-bottom: 2rem;
 }
 
 button {
@@ -82,4 +83,8 @@ input[type='text']:focus-visible {
 
 .error {
 	color: var(--error-color);
+}
+
+input[type='checkbox'] {
+	accent-color: var(--accent-color);
 }

@@ -6,10 +6,18 @@ import { error, json } from '@sveltejs/kit'
 
 const score_service = new ScoreService(turso)
 
-export const GET: RequestHandler = async () => {
+export const GET: RequestHandler = async (e) => {
 	try {
-		const board = await score_service.get_leaderboard()
-		return json({ board })
+		const limit_param = e.url.searchParams.get('limit')
+		const limit = Number(limit_param)
+
+		if (limit_param && Number.isInteger(limit) && limit >= 0) {
+			const scores = await score_service.get_best_scores(limit)
+			return json({ scores })
+		} else {
+			const scores = await score_service.get_all_scores()
+			return json({ scores })
+		}
 	} catch (err) {
 		console.error(err)
 		return error(500, 'Internal server error')
@@ -26,11 +34,8 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	try {
-		const { message } = await score_service.submit_score(
-			result.data.name,
-			result.data.score,
-		)
-		return json({ message })
+		await score_service.submit_score(result.data.name, result.data.score)
+		return json({ message: 'Score has been added' })
 	} catch (err) {
 		console.error(err)
 		return error(500, 'Internal server error')

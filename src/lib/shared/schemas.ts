@@ -21,8 +21,8 @@ export const ScoreSchema = z
 	.int({
 		message: 'Score must be an integer',
 	})
-	.nonnegative({
-		message: 'Score must be non-negative',
+	.min(1, {
+		message: 'Score must be at least 1',
 	})
 
 export const PostRequestSchema = z.object({
@@ -37,6 +37,6 @@ export const ScoreEntrySchema = z.object({
 	created_at: z.string().refine((value) => !isNaN(Date.parse(value))),
 })
 
-export const LeaderBoardSchema = z.array(ScoreEntrySchema)
+export const ScoreListSchema = z.array(ScoreEntrySchema)
 
-export type LeaderBoardType = z.infer<typeof LeaderBoardSchema>
+export type ScoreList = z.infer<typeof ScoreListSchema>
