@@ -1,36 +1,51 @@
 # PongPong Game
 
-This is a basic browser game with a leaderboard. The latter is stored in a database on [turso](https://turso.tech/). It is mainly an illustration of using turso within SvelteKit.
+PongPong is a simple browser-based game with a leaderboard. The leaderboard is stored in a database powered by [turso](https://turso.tech/). This project primarily demonstrates how to integrate turso with SvelteKit.
 
-**Notice.** Currently, there is no protection against cheating.
+**Note:** Currently, there are no measures in place to prevent cheating.
 
-<img  width="500" alt="pongpong-screenshot" src="https://github.com/user-attachments/assets/0026e872-8a80-4dc9-9013-eecb0e53286d" />
+<img width="500" alt="pongpong-screenshot" src="https://github.com/user-attachments/assets/0026e872-8a80-4dc9-9013-eecb0e53286d" />
 
 ## Gameplay
 
-1. There are two paddles (white) that can be controlled with the Arrow Keys `Up` / `Down`. Which paddle is active depends on the current direction of the ball.
-2. The ball (yellow) bounces off the walls top/down and the paddles, but not the walls on the left/right. In that case, it is game over.
-3. Each hit of the ball increments the score.
-4. Regularly, _deviators_ are added. These are blue cells that change the direction of the ball according to an specified angle (which is different for every deviator) once it crosses them. Each time that happens, the deviator grows.
-5. Regularly, _accelerators_ are added. These are small red cells that accelerate the ball once it crosses them. When this happens, the accelerator will be removed.
-6. The best 5 scores are recorded in the leaderboard.
+1. The game features two paddles (white) that can be controlled using the Arrow Keys (`Up` / `Down`). The active paddle depends on the current direction of the ball.
+2. The ball (yellow) bounces off the top and bottom walls as well as the paddles. However, if it hits the left or right walls, the game ends.
+3. Each successful hit of the ball increases the score.
+4. Periodically, _deviators_ (blue cells) appear. These cells alter the ball's direction by a specific angle (unique to each deviator) when the ball crosses them. Each time this happens, the deviator grows in size.
+5. Periodically, _accelerators_ (red cells) appear. These cells increase the ball's speed when the ball crosses them. Once activated, the accelerator is removed.
+6. The top 5 scores are recorded on the leaderboard.
 
 ## Setup
 
-Create a database at turso and add the credentials to `.env`. Use `.env.example` as guidance.
+1. Create a database on turso and add the credentials to a `.env` file. Use `.env.example` as a reference.
+2. Ensure you have [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io/) installed.
 
-Make sure to have [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io/) installed.
+### Installation
 
-Install the dependencies:
+Install the required dependencies:
 
-`pnpm install`
+```bash
+pnpm install
+```
 
-To start the server, run
+### Seeding the database
 
-`pnpm start`
+To seed the database and create the leaderboard table, run:
 
-For development, use
+```bash
+pnpm seed
+```
 
-`pnpm dev`
+### Running the Game
 
-To seed the database, use `pnpm seed`. This creates the leaderboard table.
+To start the server, run:
+
+```bash
+pnpm start
+```
+
+For development mode, use:
+
+```bash
+pnpm dev
+```
