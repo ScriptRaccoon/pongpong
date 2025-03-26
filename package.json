@@ -12,7 +12,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check .",
-		"seed": "tsx scripts/seed.ts"
+		"seed": "tsx scripts/seed.ts",
+		"db:shell": "sqlite3 src/lib/server/pong.db"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^4.0.0",
