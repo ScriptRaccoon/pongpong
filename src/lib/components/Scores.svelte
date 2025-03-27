@@ -4,12 +4,11 @@
 
 	type Props = {
 		scores: ScoreList | null
-		status: string
 		show_all_scores: boolean
 		toggle_show_all: () => void
 	}
 
-	let { scores, status, show_all_scores, toggle_show_all }: Props = $props()
+	let { scores, show_all_scores, toggle_show_all }: Props = $props()
 
 	let title = $derived(show_all_scores ? 'All scores' : 'Leaderboard')
 </script>
@@ -43,9 +42,6 @@
 				{/each}
 			</tbody>
 		</table>
-		<div>
-			{status}
-		</div>
 	{:else}
 		<TextLoader />
 	{/if}

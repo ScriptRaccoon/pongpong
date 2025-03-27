@@ -12,12 +12,15 @@
 
 	let scores = $state<ScoreList | null>(null)
 
-	let scores_status = $state('')
-	let is_open_dialog = $state(false)
+	let form_visible = $state(false)
 	let show_all_scores = $state(false)
+	let dialog = $state<HTMLDialogElement | null>(null)
 
 	game.on_gameover(() => {
-		if (game.score > 0) is_open_dialog = true
+		if (game.score > 0 && dialog) {
+			form_visible = true
+			dialog.showModal()
+		}
 	})
 
 	async function update_scores() {
@@ -36,9 +39,21 @@
 		}
 	}
 
-	function start() {
-		scores_status = ''
-		game.handle_start()
+	async function submit_score(
+		name: string,
+		score: number,
+	): Promise<{ success: boolean }> {
+		try {
+			const res = await fetch('/api/scores', {
+				method: 'POST',
+				body: JSON.stringify({ name, score }),
+				headers: { 'Content-Type': 'application/json' },
+			})
+			return { success: res.ok }
+		} catch (err) {
+			console.error(err)
+			return { success: false }
+		}
 	}
 
 	function toggle_show_all() {
@@ -49,6 +64,10 @@
 	$effect(() => {
 		update_scores()
 	})
+
+	function close_form() {
+		form_visible = false
+	}
 </script>
 
 <svelte:window onkeydown={(e) => game.handle_keydown(e.key)} />
@@ -56,10 +75,17 @@
 <Menu
 	status={game.status}
 	score={game.score}
-	{start}
+	start={() => game.handle_start()}
 	toggle_pause={() => game.toggle_pause()}
 />
 
-<Scores {scores} status={scores_status} {show_all_scores} {toggle_show_all} />
+<Scores {scores} {show_all_scores} {toggle_show_all} />
 
-<Form score={game.score} {update_scores} bind:is_open_dialog bind:scores_status />
+<Form
+	score={game.score}
+	{form_visible}
+	submit={submit_score}
+	close={close_form}
+	{update_scores}
+	bind:dialog
+/>

@@ -4,85 +4,70 @@
 
 	type Props = {
 		score: number
-		is_open_dialog: boolean
+		form_visible: boolean
+		submit: (name: string, score: number) => Promise<{ success: boolean }>
+		close: () => void
 		update_scores: () => Promise<void>
-		scores_status: string
+		dialog: HTMLDialogElement | null
 	}
 
 	let {
 		score,
-		is_open_dialog = $bindable(),
+		form_visible,
+		submit,
+		close,
 		update_scores,
-		scores_status = $bindable(),
+		dialog = $bindable(),
 	}: Props = $props()
-
-	let dialog = $state<HTMLDialogElement | null>(null)
 
 	let name = $state('')
 	let name_error = $state('')
 	let form_error = $state('')
-	let disabled = $state(false)
+	let form_disabled = $state(false)
 	let form_status = $state('')
-
-	$effect(() => {
-		if (is_open_dialog) dialog?.showModal()
-	})
 
 	function close_dialog() {
 		dialog?.close()
-		is_open_dialog = false
+		close()
 	}
 
 	async function handle_submit(event: SubmitEvent) {
 		event.preventDefault()
-		if (disabled) return
+		if (form_disabled) return
 
 		name_error = ''
 		form_status = 'Sending...'
-		scores_status = ''
-		disabled = true
+		form_disabled = true
 
 		const { error } = NameSchema.safeParse(name)
 
 		if (error) {
 			name_error = error.errors[0]?.message ?? ''
-			disabled = false
+			form_disabled = false
 			form_status = ''
 			return
 		}
 
-		try {
-			const res = await fetch('/api/scores', {
-				method: 'POST',
-				body: JSON.stringify({ name, score }),
-				headers: { 'Content-Type': 'application/json' },
-			})
+		const { success } = await submit(name, score)
 
-			if (!res.ok) {
-				throw new Error('Failed to submit score')
-			}
+		form_disabled = false
+		form_status = ''
 
+		if (success) {
 			close_dialog()
 			await update_scores()
-
-			const res_json = await res.json()
-			scores_status = res_json?.message ?? ''
-		} catch (err) {
-			console.error(err)
+		} else {
 			form_error = 'Failed to submit score'
 		}
-
-		disabled = false
-		form_status = ''
 	}
 </script>
 
-<Overlay show={is_open_dialog} />
+<Overlay show={form_visible} />
 
 <dialog
 	bind:this={dialog}
 	onclose={() => {
-		is_open_dialog = false
+		form_visible = false
 	}}
 >
 	<form class="form" onsubmit={handle_submit}>
@@ -103,7 +88,7 @@
 			</div>
 		</div>
 		<menu>
-			<button type="submit" {disabled}>Submit</button>
+			<button type="submit" disabled={form_disabled}>Submit</button>
 			<button type="button" onclick={close_dialog}>Cancel</button>
 		</menu>
 
