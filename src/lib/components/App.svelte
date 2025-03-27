@@ -4,6 +4,7 @@
 	import Form from '$lib/components/Form.svelte'
 	import Scores from '$lib/components/Scores.svelte'
 	import { type ScoreList } from '$lib/shared/schemas'
+	import { onMount } from 'svelte'
 	import Menu from './Menu.svelte'
 
 	type Props = { game: Game }
@@ -33,13 +34,13 @@
 		update_scores()
 	}
 
-	$effect(() => {
-		update_scores()
-	})
-
 	function close_form() {
 		form_visible = false
 	}
+
+	onMount(() => {
+		update_scores()
+	})
 </script>
 
 <svelte:window onkeydown={(e) => game.handle_keydown(e.key)} />
