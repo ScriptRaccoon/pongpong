@@ -50,6 +50,7 @@
 	score={game.score}
 	start={() => game.handle_start()}
 	toggle_pause={() => game.toggle_pause()}
+	{form_visible}
 />
 
 <Scores {scores} {show_all_scores} toggle_show_all={toggle_show_all_scores} />

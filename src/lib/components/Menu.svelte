@@ -6,9 +6,10 @@
 		score: number
 		start: () => void
 		toggle_pause: () => void
+		form_visible: boolean
 	}
 
-	let { status, score, start, toggle_pause }: Props = $props()
+	let { status, score, start, toggle_pause, form_visible }: Props = $props()
 </script>
 
 <menu>
@@ -30,7 +31,7 @@
 	</button>
 	<button
 		onclick={start}
-		disabled={status === STATUS.PLAYING || status === STATUS.PAUSED}
+		disabled={status === STATUS.PLAYING || status === STATUS.PAUSED || form_visible}
 	>
 		Start
 	</button>
