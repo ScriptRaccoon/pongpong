@@ -25,6 +25,7 @@ export class Game {
 	private gameover_callback?: () => void
 	private deviators: Deviator[] = []
 	private accelerators: Accelerator[] = []
+	public error_message: string | null = $state(null)
 
 	constructor(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx
@@ -96,6 +97,7 @@ export class Game {
 		this.deviators = []
 		this.accelerators = []
 		this.status = STATUS.PLAYING
+		this.error_message = null
 		this.loop()
 	}
 
@@ -107,8 +109,15 @@ export class Game {
 		if (Math.random() < 0.05) {
 			this.accelerators.push(new Accelerator())
 		}
-		// TODO: error handling
-		await fetch(`${Game.API_URL}?action=hit`, { method: 'PATCH' })
+		this.send_hit()
+	}
+
+	private async send_hit() {
+		const res = await fetch(`${Game.API_URL}?action=hit`, { method: 'PATCH' })
+		if (!res.ok) {
+			this.error_message = (await res.json())?.message ?? null
+			this.status = STATUS.GAMEOVER
+		}
 	}
 
 	private async handle_gameover() {

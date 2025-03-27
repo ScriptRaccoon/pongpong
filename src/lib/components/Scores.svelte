@@ -48,6 +48,10 @@
 </section>
 
 <style>
+	section {
+		margin-top: 1rem;
+	}
+
 	table {
 		border-collapse: collapse;
 		width: 100%;

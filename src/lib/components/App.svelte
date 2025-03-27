@@ -53,6 +53,10 @@
 	{form_visible}
 />
 
+{#if game.error_message}
+	<p class="error">{game.error_message}</p>
+{/if}
+
 <Scores {scores} {show_all_scores} toggle_show_all={toggle_show_all_scores} />
 
 <Form score={game.score} bind:form_visible bind:dialog {update_scores} />

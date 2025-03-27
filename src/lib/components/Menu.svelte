@@ -43,6 +43,6 @@
 		display: grid;
 		grid-template-columns: 1fr auto auto;
 		gap: 1rem;
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 	}
 </style>

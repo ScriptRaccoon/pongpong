@@ -1,5 +1,5 @@
 import { ScoreService } from '$lib/server/ScoreService'
-import { games } from '$lib/server/servergame'
+import { games } from '$lib/server/ServerGame'
 import { turso } from '$lib/server/turso'
 import { PostRequestSchema } from '$lib/shared/schemas'
 import type { RequestHandler } from '@sveltejs/kit'
