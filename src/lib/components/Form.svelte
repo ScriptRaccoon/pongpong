@@ -21,8 +21,8 @@
 	}: Props = $props()
 
 	let name = $state('')
-	let form_error = $state('')
-	let form_sending = $state(false)
+	let error = $state('')
+	let sending = $state(false)
 
 	function close_dialog() {
 		dialog?.close()
@@ -31,16 +31,16 @@
 
 	async function handle_submit(event: SubmitEvent) {
 		event.preventDefault()
-		if (form_sending) return
+		if (sending) return
 
-		form_error = ''
-		form_sending = true
+		error = ''
+		sending = true
 
-		const { error } = NameSchema.safeParse(name)
+		const { error: name_error } = NameSchema.safeParse(name)
 
-		if (error) {
-			form_error = error.errors[0]?.message ?? ''
-			form_sending = false
+		if (name_error) {
+			error = name_error.errors[0]?.message ?? ''
+			sending = false
 			return
 		}
 
@@ -50,10 +50,10 @@
 			close_dialog()
 			await update_scores()
 		} else {
-			form_error = 'Failed to submit score'
+			error = 'Failed to submit score'
 		}
 
-		form_sending = false
+		sending = false
 	}
 </script>
 
@@ -75,16 +75,16 @@
 			<input type="text" id="name_input" bind:value={name} />
 		</div>
 		<menu>
-			<button type="submit" disabled={form_sending}>Submit</button>
+			<button type="submit" disabled={sending}>Submit</button>
 			<button type="button" onclick={close_dialog}>Cancel</button>
 		</menu>
 
 		<div class="error" aria-live="polite">
-			{form_error}
+			{error}
 		</div>
 
 		<div aria-live="polite">
-			{#if form_sending}
+			{#if sending}
 				Sending...
 			{/if}
 		</div>
