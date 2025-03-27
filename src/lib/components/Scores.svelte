@@ -52,7 +52,6 @@
 		border-collapse: collapse;
 		width: 100%;
 		border: 1px solid var(--card-color);
-		margin-bottom: 1rem;
 	}
 
 	thead {

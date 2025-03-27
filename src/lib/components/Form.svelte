@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { submit_score } from '$lib/client/scores'
 	import { NameSchema } from '$lib/shared/schemas'
 	import Overlay from './Overlay.svelte'
 
 	type Props = {
 		score: number
 		form_visible: boolean
-		submit: (name: string, score: number) => Promise<{ success: boolean }>
 		close: () => void
 		update_scores: () => Promise<void>
 		dialog: HTMLDialogElement | null
@@ -14,7 +14,6 @@
 	let {
 		score,
 		form_visible,
-		submit,
 		close,
 		update_scores,
 		dialog = $bindable(),
@@ -44,7 +43,7 @@
 			return
 		}
 
-		const { success } = await submit(name, score)
+		const { success } = await submit_score(name, score)
 
 		if (success) {
 			close_dialog()
@@ -69,11 +68,14 @@
 		<h2>
 			Submit your score of <span>{score}</span>
 		</h2>
+
 		<p>Enter your name to save your score.</p>
+
 		<div class="group">
 			<label for="name_input">Name</label>
 			<input type="text" id="name_input" bind:value={name} />
 		</div>
+
 		<menu>
 			<button type="submit" disabled={sending}>Submit</button>
 			<button type="button" onclick={close_dialog}>Cancel</button>
