@@ -5,12 +5,13 @@
 	type Props = {
 		scores: ScoreList | null
 		status: string
-		show_all: boolean
+		show_all_scores: boolean
+		toggle_show_all: () => void
 	}
 
-	let { scores, status, show_all = $bindable() }: Props = $props()
+	let { scores, status, show_all_scores, toggle_show_all }: Props = $props()
 
-	let title = $derived(show_all ? 'All scores' : 'Leaderboard')
+	let title = $derived(show_all_scores ? 'All scores' : 'Leaderboard')
 </script>
 
 <section>
@@ -18,7 +19,7 @@
 		<h2>{title}</h2>
 		<label>
 			Show all scores
-			<input type="checkbox" bind:checked={show_all} />
+			<input type="checkbox" checked={show_all_scores} onchange={toggle_show_all} />
 		</label>
 	</header>
 	{#if scores}

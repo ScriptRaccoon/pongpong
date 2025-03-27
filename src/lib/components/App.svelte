@@ -20,9 +20,11 @@
 		if (game.score > 0) is_open_dialog = true
 	})
 
-	async function update_scores(show_all: boolean = true) {
+	async function update_scores() {
 		try {
-			const url = show_all ? '/api/scores' : `/api/scores?limit=${LEADERBOARD_SIZE}`
+			const url = show_all_scores
+				? '/api/scores'
+				: `/api/scores?limit=${LEADERBOARD_SIZE}`
 			const res = await fetch(url)
 			if (!res.ok) {
 				throw new Error("Couldn't fetch scores")
@@ -39,8 +41,13 @@
 		game.handle_start()
 	}
 
+	function toggle_show_all() {
+		show_all_scores = !show_all_scores
+		update_scores()
+	}
+
 	$effect(() => {
-		update_scores(show_all_scores)
+		update_scores()
 	})
 </script>
 
@@ -53,11 +60,6 @@
 	toggle_pause={() => game.toggle_pause()}
 />
 
-<Scores {scores} status={scores_status} bind:show_all={show_all_scores} />
+<Scores {scores} status={scores_status} {show_all_scores} {toggle_show_all} />
 
-<Form
-	score={game.score}
-	update_scores={() => update_scores(show_all_scores)}
-	bind:is_open_dialog
-	bind:scores_status
-/>
+<Form score={game.score} {update_scores} bind:is_open_dialog bind:scores_status />
