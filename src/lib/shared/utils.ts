@@ -11,3 +11,5 @@ export function rotate(x: number, y: number, angle: number) {
 	const sin = Math.sin(angle)
 	return [x * cos - y * sin, x * sin + y * cos]
 }
+
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
