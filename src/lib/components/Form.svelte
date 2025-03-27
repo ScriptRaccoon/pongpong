@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { submit_score } from '$lib/client/scores'
 	import { NameSchema } from '$lib/shared/schemas'
-	import Overlay from './Overlay.svelte'
 
 	type Props = {
 		score: number
@@ -56,8 +55,6 @@
 	}
 </script>
 
-<Overlay show={form_visible} />
-
 <dialog
 	bind:this={dialog}
 	onclose={() => {
@@ -96,7 +93,6 @@
 <style>
 	dialog {
 		border: none;
-		outline: none;
 		background-color: var(--card-color);
 		color: inherit;
 		padding: 1rem;
@@ -107,6 +103,10 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		width: min(100vw, 30rem);
+	}
+
+	dialog::backdrop {
+		backdrop-filter: blur(3px) brightness(0.5);
 	}
 
 	.group {
