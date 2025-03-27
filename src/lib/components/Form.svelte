@@ -22,8 +22,7 @@
 
 	let name = $state('')
 	let form_error = $state('')
-	let form_disabled = $state(false)
-	let form_status = $state('')
+	let form_sending = $state(false)
 
 	function close_dialog() {
 		dialog?.close()
@@ -32,25 +31,20 @@
 
 	async function handle_submit(event: SubmitEvent) {
 		event.preventDefault()
-		if (form_disabled) return
+		if (form_sending) return
 
 		form_error = ''
-		form_status = 'Sending...'
-		form_disabled = true
+		form_sending = true
 
 		const { error } = NameSchema.safeParse(name)
 
 		if (error) {
 			form_error = error.errors[0]?.message ?? ''
-			form_status = ''
-			form_disabled = false
+			form_sending = false
 			return
 		}
 
 		const { success } = await submit(name, score)
-
-		form_disabled = false
-		form_status = ''
 
 		if (success) {
 			close_dialog()
@@ -58,6 +52,8 @@
 		} else {
 			form_error = 'Failed to submit score'
 		}
+
+		form_sending = false
 	}
 </script>
 
@@ -79,7 +75,7 @@
 			<input type="text" id="name_input" bind:value={name} />
 		</div>
 		<menu>
-			<button type="submit" disabled={form_disabled}>Submit</button>
+			<button type="submit" disabled={form_sending}>Submit</button>
 			<button type="button" onclick={close_dialog}>Cancel</button>
 		</menu>
 
@@ -88,7 +84,9 @@
 		</div>
 
 		<div aria-live="polite">
-			{form_status}
+			{#if form_sending}
+				Sending...
+			{/if}
 		</div>
 	</form>
 </dialog>
