@@ -68,8 +68,16 @@ export class Game {
 	}
 
 	public handle_keydown(key: string) {
-		if (this.status !== STATUS.PLAYING) return
+		const during_game =
+			this.status === STATUS.PLAYING || this.status === STATUS.PAUSED
+		if (during_game && key === 'p') {
+			this.toggle_pause()
+		}
+
+		if (this.status != STATUS.PLAYING) return
+
 		const acting_player = this.ball.vx < 0 ? this.player_left : this.player_right
+
 		if (key === 'ArrowUp') {
 			acting_player.move_up()
 		} else if (key === 'ArrowDown') {

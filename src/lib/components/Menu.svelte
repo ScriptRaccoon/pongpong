@@ -24,9 +24,9 @@
 		onclick={toggle_pause}
 	>
 		{#if status === STATUS.PAUSED}
-			Resume
+			Resume [p]
 		{:else}
-			Pause
+			Pause [p]
 		{/if}
 	</button>
 	<button
