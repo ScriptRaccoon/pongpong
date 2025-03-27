@@ -18,16 +18,32 @@ export class Ball {
 		return this.x - this.r
 	}
 
+	private set left(value: number) {
+		this.x = value + this.r
+	}
+
 	public get right() {
 		return this.x + this.r
+	}
+
+	private set right(value: number) {
+		this.x = value - this.r
 	}
 
 	public get top() {
 		return this.y - this.r
 	}
 
+	private set top(value: number) {
+		this.y = value + this.r
+	}
+
 	public get bottom() {
 		return this.y + this.r
+	}
+
+	private set bottom(value: number) {
+		this.y = value - this.r
 	}
 
 	public draw(ctx: CanvasRenderingContext2D) {
@@ -60,11 +76,11 @@ export class Ball {
 			return 'gameover'
 		}
 
-		if (this.top <= 0) {
-			this.y = this.r
+		if (this.top < 0) {
+			this.top = 0
 			this.vy = -this.vy
-		} else if (this.bottom >= CANVAS_HEIGHT) {
-			this.y = CANVAS_HEIGHT - this.r
+		} else if (this.bottom > CANVAS_HEIGHT) {
+			this.bottom = CANVAS_HEIGHT
 			this.vy = -this.vy
 		}
 
@@ -77,7 +93,7 @@ export class Ball {
 
 		if (collides_with_left_player) {
 			this.vx = -this.vx
-			this.x = player_left.right + this.r
+			this.left = player_left.right
 			return 'collision'
 		}
 
@@ -90,7 +106,7 @@ export class Ball {
 
 		if (collides_with_right_player) {
 			this.vx = -this.vx
-			this.x = player_right.x - this.r
+			this.right = player_right.left
 			return 'collision'
 		}
 

@@ -30,8 +30,16 @@ export class Player {
 		return this.y
 	}
 
+	private set top(value: number) {
+		this.y = value
+	}
+
 	public get bottom() {
 		return this.y + Player.SIZE.y
+	}
+
+	private set bottom(value: number) {
+		this.y = value - Player.SIZE.y
 	}
 
 	public update() {
@@ -43,12 +51,12 @@ export class Player {
 		}
 
 		if (this.top < 0) {
-			this.y = 0
+			this.top = 0
 			this.vy = 0
 		}
 
 		if (this.bottom > CANVAS_HEIGHT) {
-			this.y = CANVAS_HEIGHT - Player.SIZE.y
+			this.bottom = CANVAS_HEIGHT
 			this.vy = 0
 		}
 	}
