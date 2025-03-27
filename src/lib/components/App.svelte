@@ -4,6 +4,7 @@
 	import Scores from '$lib/components/Scores.svelte'
 	import { LEADERBOARD_SIZE } from '$lib/shared/config'
 	import { ScoreListSchema, type ScoreList } from '$lib/shared/schemas'
+	import Menu from './Menu.svelte'
 
 	type Props = { game: Game }
 
@@ -13,7 +14,6 @@
 
 	let scores_status = $state('')
 	let is_open_dialog = $state(false)
-	let first_time = $state(true)
 	let show_all_scores = $state(false)
 
 	game.on_gameover(() => {
@@ -37,7 +37,6 @@
 	function start() {
 		scores_status = ''
 		game.handle_start()
-		first_time = false
 	}
 
 	$effect(() => {
@@ -47,24 +46,7 @@
 
 <svelte:window onkeydown={(e) => game.handle_keydown(e.key)} />
 
-<menu>
-	<div>
-		Score: {game.score}
-		{#if game.gameover}
-			&ndash; Game Over
-		{/if}
-	</div>
-	<button disabled={!game.playing} onclick={() => game.toggle_pause()}>
-		{#if game.paused}
-			Resume
-		{:else}
-			Pause
-		{/if}
-	</button>
-	<button onclick={start} disabled={game.playing} class:attention={first_time}>
-		Start
-	</button>
-</menu>
+<Menu {game} {start} toggle_pause={() => game.toggle_pause()} />
 
 <Scores {scores} status={scores_status} bind:show_all={show_all_scores} />
 
@@ -74,13 +56,3 @@
 	bind:is_open_dialog
 	bind:scores_status
 />
-
-<style>
-	menu {
-		padding-block: 0.5rem;
-		display: grid;
-		grid-template-columns: 1fr auto auto;
-		gap: 1rem;
-		margin-bottom: 2rem;
-	}
-</style>
