@@ -20,7 +20,7 @@ export class Game {
 	private ctx: CanvasRenderingContext2D
 	private ball: Ball = new Ball()
 	private player_left: Player = new Player(50)
-	private player_right: Player = new Player(CANVAS_WIDTH - 50 - Player.SIZE.x)
+	private player_right: Player = new Player(CANVAS_WIDTH - 50 - this.player_left.size.x)
 	private gameover_callback?: () => void
 	private deviators: Deviator[] = []
 	private accelerators: Accelerator[] = []

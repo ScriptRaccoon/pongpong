@@ -1,12 +1,12 @@
 import { CANVAS_WIDTH } from '$lib/shared/config'
-import { distance, rotate } from '$lib/shared/utils'
+import { collides, rotate } from '$lib/shared/utils'
 import type { Ball } from './ball'
 
 export class Deviator {
 	private static COLLISION_TIMEOUT = 1000
-	private r = 6
-	private x = Math.random() * CANVAS_WIDTH
-	private y = Math.random() * CANVAS_WIDTH
+	public r = 6
+	public x = Math.random() * CANVAS_WIDTH
+	public y = Math.random() * CANVAS_WIDTH
 	private angle = Math.random() * Math.PI * 2
 	private active_collisions: Ball[] = []
 
@@ -21,8 +21,7 @@ export class Deviator {
 	public handle_collison(ball: Ball): void {
 		if (this.active_collisions.includes(ball)) return
 
-		const collides = distance(this.x, this.y, ball.x, ball.y) < this.r + ball.r
-		if (!collides) return
+		if (!collides(this, ball)) return
 
 		this.active_collisions.push(ball)
 		this.deviate(ball)

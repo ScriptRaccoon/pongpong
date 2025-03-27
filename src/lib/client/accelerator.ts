@@ -1,11 +1,11 @@
 import { CANVAS_WIDTH } from '$lib/shared/config'
-import { distance } from '$lib/shared/utils'
+import { collides } from '$lib/shared/utils'
 import type { Ball } from './ball'
 
 export class Accelerator {
-	private r = 4
-	private x = Math.random() * CANVAS_WIDTH
-	private y = Math.random() * CANVAS_WIDTH
+	public x = Math.random() * CANVAS_WIDTH
+	public y = Math.random() * CANVAS_WIDTH
+	public r = 4
 	public active = true
 
 	public draw(ctx: CanvasRenderingContext2D): void {
@@ -17,8 +17,7 @@ export class Accelerator {
 	}
 
 	public handle_collision(ball: Ball): void {
-		const collides = distance(this.x, this.y, ball.x, ball.y) < this.r + ball.r
-		if (collides) {
+		if (collides(this, ball)) {
 			this.active = false
 			ball.accelerate()
 		}

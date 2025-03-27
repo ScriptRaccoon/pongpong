@@ -3,19 +3,19 @@ import { CANVAS_HEIGHT } from '$lib/shared/config'
 export class Player {
 	private static MAX_VELOCITY = 7
 	private static FRICTION = 0.9
-	public static SIZE = { x: 20, y: 100 }
 
 	constructor(
-		public readonly x: number,
+		public x: number,
 		public y: number = 0,
 		public vy: number = 0,
+		public size = { x: 20, y: 100 },
 	) {
 		this.reset()
 	}
 
 	public draw(ctx: CanvasRenderingContext2D): void {
 		ctx.fillStyle = 'white'
-		ctx.fillRect(this.x, this.y, Player.SIZE.x, Player.SIZE.y)
+		ctx.fillRect(this.x, this.y, this.size.x, this.size.y)
 	}
 
 	public get left() {
@@ -23,7 +23,7 @@ export class Player {
 	}
 
 	public get right() {
-		return this.x + Player.SIZE.x
+		return this.x + this.size.x
 	}
 
 	public get top() {
@@ -35,11 +35,11 @@ export class Player {
 	}
 
 	public get bottom() {
-		return this.y + Player.SIZE.y
+		return this.y + this.size.y
 	}
 
 	private set bottom(value: number) {
-		this.y = value - Player.SIZE.y
+		this.y = value - this.size.y
 	}
 
 	public update(): void {
@@ -70,7 +70,7 @@ export class Player {
 	}
 
 	public reset(): void {
-		this.y = CANVAS_HEIGHT / 2 - Player.SIZE.y / 2
+		this.y = CANVAS_HEIGHT / 2 - this.size.y / 2
 		this.vy = 0
 	}
 }
