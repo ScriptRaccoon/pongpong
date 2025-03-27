@@ -85,7 +85,7 @@ export class Game {
 		}
 	}
 
-	public handle_start() {
+	public start() {
 		this.score = 0
 		this.ball.reset()
 		this.player_left.reset()

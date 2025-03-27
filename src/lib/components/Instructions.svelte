@@ -13,8 +13,8 @@
 		<p>
 			<strong>Instructions.</strong>
 			Control the two paddles with the keys
-			<kbd>Up</kbd> / <kbd>Down</kbd>. Each ball hit gives you a point. Watch out
-			for deviators (blue) and accelerators (red)!
+			<kbd>&uarr;</kbd> <kbd>&darr;</kbd>. Each ball hit gives you a point. Watch
+			out for deviators (blue) and accelerators (red)!
 		</p>
 		<button onclick={close_instructions}>Ok</button>
 	</div>
@@ -35,8 +35,10 @@
 
 	kbd {
 		background-color: var(--card-color);
-		padding: 0.15rem 0.4rem;
+		padding-inline: 0.4rem;
 		color: var(--text-color);
 		border-radius: 0.2rem;
+		font-size: 1.125rem;
+		box-shadow: 1px 1px #fff4;
 	}
 </style>

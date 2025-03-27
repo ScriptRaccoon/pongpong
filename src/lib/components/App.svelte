@@ -44,7 +44,7 @@
 <Menu
 	status={game.status}
 	score={game.score}
-	start={() => game.handle_start()}
+	start={() => game.start()}
 	toggle_pause={() => game.toggle_pause()}
 	{form_visible}
 />
