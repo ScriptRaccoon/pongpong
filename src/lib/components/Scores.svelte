@@ -32,7 +32,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each scores as entry, i}
+				{#each scores as entry, i (entry.id)}
 					<tr>
 						<td>#{i + 1}</td>
 						<td>{entry.name}</td>
