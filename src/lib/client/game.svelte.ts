@@ -5,11 +5,18 @@ import { Ball } from './ball'
 import { Deviator } from './deviator'
 import { Player } from './player'
 
+export const STATUS = {
+	INITIAL: 'initial',
+	PLAYING: 'playing',
+	PAUSED: 'paused',
+	GAMEOVER: 'gameover',
+} as const
+
+export type GameStatus = (typeof STATUS)[keyof typeof STATUS]
+
 export class Game {
 	public score = $state(0)
-	public playing = $state(false)
-	public gameover = $state(false)
-	public paused = $state(false)
+	public status = $state<GameStatus>(STATUS.INITIAL)
 	private ctx: CanvasRenderingContext2D
 	private ball: Ball = new Ball()
 	private player_left: Player = new Player(50)
@@ -57,11 +64,11 @@ export class Game {
 	public loop() {
 		this.update()
 		this.draw()
-		if (this.playing && !this.paused) requestAnimationFrame(() => this.loop())
+		if (this.status === STATUS.PLAYING) requestAnimationFrame(() => this.loop())
 	}
 
 	public handle_keydown(key: string) {
-		if (!this.playing || this.paused) return
+		if (this.status !== STATUS.PLAYING) return
 		const acting_player = this.ball.vx < 0 ? this.player_left : this.player_right
 		if (key === 'ArrowUp') {
 			acting_player.move_up()
@@ -77,8 +84,7 @@ export class Game {
 		this.player_right.reset()
 		this.deviators = []
 		this.accelerators = []
-		this.playing = true
-		this.gameover = false
+		this.status = STATUS.PLAYING
 		this.loop()
 	}
 
@@ -93,8 +99,7 @@ export class Game {
 	}
 
 	private handle_gameover() {
-		this.playing = false
-		this.gameover = true
+		this.status = STATUS.GAMEOVER
 		this.gameover_callback?.()
 	}
 
@@ -103,8 +108,8 @@ export class Game {
 	}
 
 	public toggle_pause() {
-		if (!this.playing) return
-		this.paused = !this.paused
-		if (!this.paused) this.loop()
+		if (this.status === STATUS.GAMEOVER) return
+		this.status = this.status === STATUS.PLAYING ? STATUS.PAUSED : STATUS.PLAYING
+		if (this.status === STATUS.PLAYING) this.loop()
 	}
 }

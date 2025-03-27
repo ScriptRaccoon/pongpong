@@ -1,22 +1,30 @@
 <script lang="ts">
-	import type { Game } from '$lib/client/game.svelte'
+	import { STATUS, type GameStatus } from '$lib/client/game.svelte'
 
-	type Props = { game: Game; start: () => void; toggle_pause: () => void }
+	type Props = {
+		status: GameStatus
+		score: number
+		start: () => void
+		toggle_pause: () => void
+	}
 
-	let { game, start, toggle_pause }: Props = $props()
+	let { status, score, start, toggle_pause }: Props = $props()
 
-	let first_time = $state(false)
+	let first_time = $state(true)
 </script>
 
 <menu>
 	<div>
-		Score: {game.score}
-		{#if game.gameover}
+		Score: {score}
+		{#if status === STATUS.GAMEOVER}
 			&ndash; Game Over
 		{/if}
 	</div>
-	<button disabled={!game.playing} onclick={toggle_pause}>
-		{#if game.paused}
+	<button
+		disabled={status !== STATUS.PLAYING && status !== STATUS.PAUSED}
+		onclick={toggle_pause}
+	>
+		{#if status === STATUS.PAUSED}
 			Resume
 		{:else}
 			Pause
@@ -27,7 +35,7 @@
 			first_time = false
 			start()
 		}}
-		disabled={game.playing}
+		disabled={status === STATUS.PLAYING || status === STATUS.PAUSED}
 		class:attention={first_time}
 	>
 		Start

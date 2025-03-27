@@ -46,7 +46,12 @@
 
 <svelte:window onkeydown={(e) => game.handle_keydown(e.key)} />
 
-<Menu {game} {start} toggle_pause={() => game.toggle_pause()} />
+<Menu
+	status={game.status}
+	score={game.score}
+	{start}
+	toggle_pause={() => game.toggle_pause()}
+/>
 
 <Scores {scores} status={scores_status} bind:show_all={show_all_scores} />
 
