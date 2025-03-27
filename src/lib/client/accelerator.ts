@@ -6,8 +6,9 @@ export class Accelerator {
 	private r = 4
 	private x = Math.random() * CANVAS_WIDTH
 	private y = Math.random() * CANVAS_WIDTH
+	public active = true
 
-	public draw(ctx: CanvasRenderingContext2D) {
+	public draw(ctx: CanvasRenderingContext2D): void {
 		ctx.fillStyle = 'orangered'
 		ctx.beginPath()
 		ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2)
@@ -15,10 +16,11 @@ export class Accelerator {
 		ctx.closePath()
 	}
 
-	public is_colliding(ball: Ball): boolean {
+	public handle_collision(ball: Ball): void {
 		const collides = distance(this.x, this.y, ball.x, ball.y) < this.r + ball.r
-		if (!collides) return false
-		ball.accelerate()
-		return true
+		if (collides) {
+			this.active = false
+			ball.accelerate()
+		}
 	}
 }

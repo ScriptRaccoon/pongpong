@@ -13,7 +13,7 @@ export class Player {
 		this.reset()
 	}
 
-	public draw(ctx: CanvasRenderingContext2D) {
+	public draw(ctx: CanvasRenderingContext2D): void {
 		ctx.fillStyle = 'white'
 		ctx.fillRect(this.x, this.y, Player.SIZE.x, Player.SIZE.y)
 	}
@@ -42,7 +42,7 @@ export class Player {
 		this.y = value - Player.SIZE.y
 	}
 
-	public update() {
+	public update(): void {
 		this.y += this.vy
 		this.vy *= Player.FRICTION
 
@@ -61,15 +61,15 @@ export class Player {
 		}
 	}
 
-	public move_down() {
+	public move_down(): void {
 		this.vy = Player.MAX_VELOCITY
 	}
 
-	public move_up() {
+	public move_up(): void {
 		this.vy = -Player.MAX_VELOCITY
 	}
 
-	public reset() {
+	public reset(): void {
 		this.y = CANVAS_HEIGHT / 2 - Player.SIZE.y / 2
 		this.vy = 0
 	}

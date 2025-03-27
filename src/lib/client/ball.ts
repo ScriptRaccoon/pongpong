@@ -46,7 +46,7 @@ export class Ball {
 		this.y = value - this.r
 	}
 
-	public draw(ctx: CanvasRenderingContext2D) {
+	public draw(ctx: CanvasRenderingContext2D): void {
 		ctx.fillStyle = 'yellow'
 		ctx.beginPath()
 		ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2)
@@ -54,7 +54,7 @@ export class Ball {
 		ctx.closePath()
 	}
 
-	public reset() {
+	public reset(): void {
 		this.x = CANVAS_WIDTH / 2
 		this.y = CANVAS_HEIGHT / 2
 		const angle = 0.5 * (Math.random() - 0.5) * Math.PI
@@ -113,7 +113,7 @@ export class Ball {
 		return null
 	}
 
-	public accelerate() {
+	public accelerate(): void {
 		this.vx *= 1.125
 		this.vy *= 1.125
 	}
