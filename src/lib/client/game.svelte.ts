@@ -15,6 +15,7 @@ export const STATUS = {
 export type GameStatus = (typeof STATUS)[keyof typeof STATUS]
 
 export class Game {
+	private static API_URL = '/api/games'
 	public score = $state(0)
 	public status = $state<GameStatus>(STATUS.INITIAL)
 	private ctx: CanvasRenderingContext2D
@@ -85,7 +86,9 @@ export class Game {
 		}
 	}
 
-	public start() {
+	public async start() {
+		// TODO: error handling
+		await fetch(Game.API_URL, { method: 'POST' })
 		this.score = 0
 		this.ball.reset()
 		this.player_left.reset()
@@ -96,7 +99,7 @@ export class Game {
 		this.loop()
 	}
 
-	private handle_collision() {
+	private async handle_collision() {
 		this.score++
 		if (Math.random() < 0.1) {
 			this.deviators.push(new Deviator())
@@ -104,10 +107,17 @@ export class Game {
 		if (Math.random() < 0.05) {
 			this.accelerators.push(new Accelerator())
 		}
+		// TODO: error handling
+		await fetch(`${Game.API_URL}?action=hit`, { method: 'PATCH' })
 	}
 
-	private handle_gameover() {
+	private async handle_gameover() {
 		this.status = STATUS.GAMEOVER
+
+		const res = await fetch(Game.API_URL) // TODO: error handling
+		const res_json = await res.json()
+		this.score = res_json.score // TODO: error handling
+
 		this.gameover_callback?.()
 	}
 

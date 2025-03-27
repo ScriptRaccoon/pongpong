@@ -34,6 +34,10 @@
 		update_scores()
 	}
 
+	function start() {
+		game.start()
+	}
+
 	onMount(() => {
 		update_scores()
 	})
@@ -44,7 +48,7 @@
 <Menu
 	status={game.status}
 	score={game.score}
-	start={() => game.start()}
+	{start}
 	toggle_pause={() => game.toggle_pause()}
 	{form_visible}
 />
