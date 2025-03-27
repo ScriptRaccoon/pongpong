@@ -34,10 +34,6 @@
 		update_scores()
 	}
 
-	function close_form() {
-		form_visible = false
-	}
-
 	onMount(() => {
 		update_scores()
 	})
@@ -55,4 +51,4 @@
 
 <Scores {scores} {show_all_scores} toggle_show_all={toggle_show_all_scores} />
 
-<Form score={game.score} {form_visible} close={close_form} {update_scores} bind:dialog />
+<Form score={game.score} bind:form_visible bind:dialog {update_scores} />

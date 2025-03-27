@@ -5,17 +5,15 @@
 	type Props = {
 		score: number
 		form_visible: boolean
-		close: () => void
-		update_scores: () => Promise<void>
 		dialog: HTMLDialogElement | null
+		update_scores: () => Promise<void>
 	}
 
 	let {
 		score,
-		form_visible,
-		close,
-		update_scores,
+		form_visible = $bindable(),
 		dialog = $bindable(),
+		update_scores,
 	}: Props = $props()
 
 	let name = $state('')
@@ -24,7 +22,7 @@
 
 	function close_dialog() {
 		dialog?.close()
-		close()
+		form_visible = false
 	}
 
 	async function handle_submit(event: SubmitEvent) {
