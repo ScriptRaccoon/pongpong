@@ -43,21 +43,6 @@ button:active {
 	transform: scale(0.975);
 }
 
-button.attention {
-	display: inline-block;
-	animation: attention 1s ease-in-out infinite alternate;
-}
-
-@keyframes attention {
-	0%,
-	30% {
-		scale: 1;
-	}
-	100% {
-		scale: 1.25;
-	}
-}
-
 button:focus-visible {
 	outline: 2px solid var(--text-color);
 	outline-offset: 2px;

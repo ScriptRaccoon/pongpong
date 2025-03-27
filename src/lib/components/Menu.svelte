@@ -9,8 +9,6 @@
 	}
 
 	let { status, score, start, toggle_pause }: Props = $props()
-
-	let first_time = $state(true)
 </script>
 
 <menu>
@@ -31,12 +29,8 @@
 		{/if}
 	</button>
 	<button
-		onclick={() => {
-			first_time = false
-			start()
-		}}
+		onclick={start}
 		disabled={status === STATUS.PLAYING || status === STATUS.PAUSED}
-		class:attention={first_time}
 	>
 		Start
 	</button>
