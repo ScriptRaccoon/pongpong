@@ -16,6 +16,7 @@
 	let form_visible = $state(false)
 	let show_all_scores = $state(false)
 	let dialog = $state<HTMLDialogElement | null>(null)
+	let latest_score_id = $state<number | null>(null)
 
 	game.on_gameover(() => {
 		if (game.score > 0 && dialog) {
@@ -57,6 +58,17 @@
 	<p class="error">{game.error_message}</p>
 {/if}
 
-<Scores {scores} {show_all_scores} toggle_show_all={toggle_show_all_scores} />
+<Scores
+	{scores}
+	{show_all_scores}
+	{latest_score_id}
+	toggle_show_all={toggle_show_all_scores}
+/>
 
-<Form score={game.score} bind:form_visible bind:dialog {update_scores} />
+<Form
+	score={game.score}
+	bind:form_visible
+	bind:dialog
+	bind:latest_score_id
+	{update_scores}
+/>

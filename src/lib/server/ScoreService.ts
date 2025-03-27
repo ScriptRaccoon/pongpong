@@ -4,7 +4,7 @@ interface Database {
 	execute: (sql: {
 		sql: string
 		args?: Record<string, any>
-	}) => Promise<{ rows: unknown[] }>
+	}) => Promise<{ rows: unknown[]; lastInsertRowid: bigint | undefined }>
 }
 
 export class ScoreService {
@@ -29,10 +29,11 @@ export class ScoreService {
 		await this.db.execute({ sql: 'DELETE FROM scores' })
 	}
 
-	public async submit_score(name: string, score: number) {
-		await this.db.execute({
+	public async submit_score(name: string, score: number): Promise<number> {
+		const result = await this.db.execute({
 			sql: 'INSERT INTO scores (name, score) VALUES (:name, :score)',
 			args: { name, score },
 		})
+		return Number(result.lastInsertRowid)
 	}
 }

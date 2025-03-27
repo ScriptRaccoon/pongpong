@@ -50,9 +50,9 @@ export const POST: RequestHandler = async (event) => {
 	}
 
 	try {
-		await score_service.submit_score(name, score)
+		const id = await score_service.submit_score(name, score)
 		game.finish()
-		return json({ message: 'Score has been added' })
+		return json({ message: 'Score has been added', id })
 	} catch (err) {
 		console.error(err)
 		return error(500, 'Internal server error')

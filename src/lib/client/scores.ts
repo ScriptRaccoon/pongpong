@@ -22,16 +22,17 @@ export async function fetch_scores(show_all_scores: boolean): Promise<ScoreList 
 export async function submit_score(
 	name: string,
 	score: number,
-): Promise<{ success: boolean }> {
+): Promise<{ success: boolean; id: null | number }> {
 	try {
 		const res = await fetch(API_URL, {
 			method: 'POST',
 			body: JSON.stringify({ name, score }),
 			headers: { 'Content-Type': 'application/json' },
 		})
-		return { success: res.ok }
+		const res_json = await res.json()
+		return { success: res.ok, id: res_json?.id ?? null }
 	} catch (err) {
 		console.error(err)
-		return { success: false }
+		return { success: false, id: null }
 	}
 }

@@ -6,6 +6,7 @@
 		score: number
 		form_visible: boolean
 		dialog: HTMLDialogElement | null
+		latest_score_id: number | null
 		update_scores: () => Promise<void>
 	}
 
@@ -13,6 +14,7 @@
 		score,
 		form_visible = $bindable(),
 		dialog = $bindable(),
+		latest_score_id = $bindable(),
 		update_scores,
 	}: Props = $props()
 
@@ -40,7 +42,9 @@
 			return
 		}
 
-		const { success } = await submit_score(name, score)
+		const { success, id } = await submit_score(name, score)
+
+		if (id) latest_score_id = id
 
 		if (success) {
 			close_dialog()

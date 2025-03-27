@@ -5,10 +5,11 @@
 	type Props = {
 		scores: ScoreList | null
 		show_all_scores: boolean
+		latest_score_id: number | null
 		toggle_show_all: () => void
 	}
 
-	let { scores, show_all_scores, toggle_show_all }: Props = $props()
+	let { scores, show_all_scores, latest_score_id, toggle_show_all }: Props = $props()
 
 	let title = $derived(show_all_scores ? 'All scores' : 'Leaderboard')
 </script>
@@ -33,7 +34,7 @@
 			</thead>
 			<tbody>
 				{#each scores as entry, i (entry.id)}
-					<tr>
+					<tr class:highlight={latest_score_id === entry.id}>
 						<td>#{i + 1}</td>
 						<td>{entry.name}</td>
 						<td>{entry.score}</td>
@@ -81,5 +82,9 @@
 
 	label {
 		gap: 0.5rem;
+	}
+
+	tr.highlight {
+		outline: 1px solid var(--accent-color);
 	}
 </style>
