@@ -21,7 +21,6 @@
 	}: Props = $props()
 
 	let name = $state('')
-	let name_error = $state('')
 	let form_error = $state('')
 	let form_disabled = $state(false)
 	let form_status = $state('')
@@ -35,16 +34,16 @@
 		event.preventDefault()
 		if (form_disabled) return
 
-		name_error = ''
+		form_error = ''
 		form_status = 'Sending...'
 		form_disabled = true
 
 		const { error } = NameSchema.safeParse(name)
 
 		if (error) {
-			name_error = error.errors[0]?.message ?? ''
-			form_disabled = false
+			form_error = error.errors[0]?.message ?? ''
 			form_status = ''
+			form_disabled = false
 			return
 		}
 
@@ -77,15 +76,7 @@
 		<p>Enter your name to save your score.</p>
 		<div class="group">
 			<label for="name_input">Name</label>
-			<input
-				type="text"
-				id="name_input"
-				aria-describedby="name_error"
-				bind:value={name}
-			/>
-			<div class="error" id="name_error" aria-live="polite">
-				{name_error}
-			</div>
+			<input type="text" id="name_input" bind:value={name} />
 		</div>
 		<menu>
 			<button type="submit" disabled={form_disabled}>Submit</button>
