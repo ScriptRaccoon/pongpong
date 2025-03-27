@@ -13,12 +13,28 @@ export class Player {
 		this.reset()
 	}
 
-	draw(ctx: CanvasRenderingContext2D) {
+	public draw(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = 'white'
 		ctx.fillRect(this.x, this.y, Player.SIZE.x, Player.SIZE.y)
 	}
 
-	update() {
+	public get left() {
+		return this.x
+	}
+
+	public get right() {
+		return this.x + Player.SIZE.x
+	}
+
+	public get top() {
+		return this.y
+	}
+
+	public get bottom() {
+		return this.y + Player.SIZE.y
+	}
+
+	public update() {
 		this.y += this.vy
 		this.vy *= Player.FRICTION
 
@@ -26,26 +42,26 @@ export class Player {
 			this.vy = 0
 		}
 
-		if (this.y < 0) {
+		if (this.top < 0) {
 			this.y = 0
 			this.vy = 0
 		}
 
-		if (this.y > CANVAS_HEIGHT - Player.SIZE.y) {
+		if (this.bottom > CANVAS_HEIGHT) {
 			this.y = CANVAS_HEIGHT - Player.SIZE.y
 			this.vy = 0
 		}
 	}
 
-	move_down() {
+	public move_down() {
 		this.vy = Player.MAX_VELOCITY
 	}
 
-	move_up() {
+	public move_up() {
 		this.vy = -Player.MAX_VELOCITY
 	}
 
-	reset() {
+	public reset() {
 		this.y = CANVAS_HEIGHT / 2 - Player.SIZE.y / 2
 		this.vy = 0
 	}

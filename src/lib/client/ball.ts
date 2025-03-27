@@ -14,6 +14,22 @@ export class Ball {
 		this.reset()
 	}
 
+	public get left() {
+		return this.x - this.r
+	}
+
+	public get right() {
+		return this.x + this.r
+	}
+
+	public get top() {
+		return this.y - this.r
+	}
+
+	public get bottom() {
+		return this.y + this.r
+	}
+
 	public draw(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = 'yellow'
 		ctx.beginPath()
@@ -44,33 +60,33 @@ export class Ball {
 			return 'gameover'
 		}
 
-		if (this.y - this.r <= 0) {
+		if (this.top <= 0) {
 			this.y = this.r
 			this.vy = -this.vy
-		} else if (this.y + this.r >= CANVAS_HEIGHT) {
+		} else if (this.bottom >= CANVAS_HEIGHT) {
 			this.y = CANVAS_HEIGHT - this.r
 			this.vy = -this.vy
 		}
 
 		const collides_with_left_player =
-			this.x - this.r <= player_left.x + Player.SIZE.x &&
-			this.x >= player_left.x + Player.SIZE.x &&
+			this.left <= player_left.right &&
+			this.x >= player_left.right &&
 			this.vx < 0 &&
-			this.y >= player_left.y &&
-			this.y <= player_left.y + Player.SIZE.y
+			this.y >= player_left.top &&
+			this.y <= player_left.bottom
 
 		if (collides_with_left_player) {
 			this.vx = -this.vx
-			this.x = player_left.x + Player.SIZE.x + this.r
+			this.x = player_left.right + this.r
 			return 'collision'
 		}
 
 		const collides_with_right_player =
-			this.x + this.r >= player_right.x &&
-			this.x <= player_right.x &&
+			this.right >= player_right.left &&
+			this.x <= player_right.left &&
 			this.vx > 0 &&
-			this.y >= player_right.y &&
-			this.y <= player_right.y + Player.SIZE.y
+			this.y >= player_right.top &&
+			this.y <= player_right.bottom
 
 		if (collides_with_right_player) {
 			this.vx = -this.vx
