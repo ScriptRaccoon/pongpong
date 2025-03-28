@@ -12,14 +12,14 @@ export class ScoreService {
 
 	public async get_all_scores(): Promise<ScoreList> {
 		const { rows } = await this.db.execute({
-			sql: 'SELECT * FROM scores ORDER BY score DESC',
+			sql: 'SELECT id, name, score, created_at FROM scores ORDER BY score DESC',
 		})
 		return ScoreListSchema.parse(rows)
 	}
 
 	public async get_best_scores(limit: number): Promise<ScoreList> {
 		const { rows } = await this.db.execute({
-			sql: 'SELECT * FROM scores ORDER BY score DESC LIMIT :limit',
+			sql: 'SELECT id, name, score, created_at FROM scores ORDER BY score DESC LIMIT :limit',
 			args: { limit },
 		})
 		return ScoreListSchema.parse(rows)
