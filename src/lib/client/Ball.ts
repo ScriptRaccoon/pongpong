@@ -1,5 +1,5 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '$lib/shared/config'
-import { Player } from './player'
+import { Player } from './Player'
 
 type UpdateAction = 'gameover' | 'collision'
 

@@ -1,6 +1,6 @@
 import { CANVAS_WIDTH } from '$lib/shared/config'
 import { collides } from '$lib/shared/utils'
-import type { Ball } from './ball'
+import type { Ball } from './Ball'
 
 export class Accelerator {
 	public x = Math.random() * CANVAS_WIDTH

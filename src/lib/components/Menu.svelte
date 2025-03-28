@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { STATUS, type GameStatus } from '$lib/client/game.svelte'
+	import { STATUS, type GameStatus } from '$lib/client/Game.svelte'
 
 	type Props = {
 		status: GameStatus

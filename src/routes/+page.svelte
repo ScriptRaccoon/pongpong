@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Game } from '$lib/client/game.svelte'
+	import { Game } from '$lib/client/Game.svelte'
 	import App from '$lib/components/App.svelte'
 	import Instructions from '$lib/components/Instructions.svelte'
 	import { CANVAS_HEIGHT, CANVAS_WIDTH } from '$lib/shared/config.js'

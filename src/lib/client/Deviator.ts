@@ -1,6 +1,6 @@
 import { CANVAS_WIDTH } from '$lib/shared/config'
 import { collides, rotate } from '$lib/shared/utils'
-import type { Ball } from './ball'
+import type { Ball } from './Ball'
 
 export class Deviator {
 	private static COLLISION_TIMEOUT = 1000

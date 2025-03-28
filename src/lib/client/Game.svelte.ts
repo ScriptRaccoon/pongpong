@@ -1,9 +1,9 @@
 import { CANVAS_WIDTH } from '$lib/shared/config'
 import { clear_canvas } from '$lib/shared/utils'
-import { Accelerator } from './accelerator'
-import { Ball } from './ball'
-import { Deviator } from './deviator'
-import { Player } from './player'
+import { Accelerator } from './Accelerator'
+import { Ball } from './Ball'
+import { Deviator } from './Deviator'
+import { Player } from './Player'
 
 export const STATUS = {
 	INITIAL: 'initial',

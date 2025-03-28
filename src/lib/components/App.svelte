@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { type Game } from '$lib/client/game.svelte'
 	import Form from '$lib/components/Form.svelte'
 	import Scores from '$lib/components/Scores.svelte'
 	import { type ScoreList } from '$lib/shared/schemas'
 	import { onMount } from 'svelte'
 	import Menu from './Menu.svelte'
-	import { ScoreClient } from '$lib/client/scores'
+	import { ScoreClient } from '$lib/client/ScoreClient'
+	import type { Game } from '$lib/client/Game.svelte'
 
 	type Props = { game: Game }
 

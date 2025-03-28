@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ScoreClient } from '$lib/client/scores'
+	import { ScoreClient } from '$lib/client/ScoreClient'
 	import { NameSchema } from '$lib/shared/schemas'
 
 	type Props = {
