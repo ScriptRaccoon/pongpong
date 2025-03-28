@@ -3,6 +3,7 @@ import { CANVAS_HEIGHT } from '$lib/shared/config'
 export class Player {
 	private static MAX_VELOCITY = 7
 	private static FRICTION = 0.9
+	private static VELOCITY_THRESHOLD = 0.1
 
 	constructor(
 		public x: number,
@@ -46,7 +47,7 @@ export class Player {
 		this.y += this.vy
 		this.vy *= Player.FRICTION
 
-		if (Math.abs(this.vy) < 0.01) {
+		if (Math.abs(this.vy) < Player.VELOCITY_THRESHOLD) {
 			this.vy = 0
 		}
 

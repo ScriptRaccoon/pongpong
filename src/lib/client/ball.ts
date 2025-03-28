@@ -1,7 +1,7 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '$lib/shared/config'
 import { Player } from './player'
 
-type UpdateAction = 'gameover' | 'collision' | null
+type UpdateAction = 'gameover' | 'collision'
 
 export class Ball {
 	public x: number = 0
@@ -62,7 +62,7 @@ export class Ball {
 		this.vy = 2 * Math.sin(angle)
 	}
 
-	public update(player_left: Player, player_right: Player): UpdateAction {
+	public update(player_left: Player, player_right: Player): UpdateAction | null {
 		if (this.vx === 0) {
 			this.vx = 0.2 * (Math.random() - 0.5)
 		}
