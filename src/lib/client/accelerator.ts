@@ -6,7 +6,6 @@ export class Accelerator {
 	public x = Math.random() * CANVAS_WIDTH
 	public y = Math.random() * CANVAS_WIDTH
 	public r = 4
-	public active = true
 
 	public draw(ctx: CanvasRenderingContext2D): void {
 		ctx.fillStyle = 'orangered'
@@ -16,10 +15,11 @@ export class Accelerator {
 		ctx.closePath()
 	}
 
-	public handle_collision(ball: Ball): void {
+	public handle_collision(ball: Ball): { collided: boolean } {
 		if (collides(this, ball)) {
-			this.active = false
 			ball.accelerate()
+			return { collided: true }
 		}
+		return { collided: false }
 	}
 }

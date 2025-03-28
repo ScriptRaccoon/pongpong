@@ -38,8 +38,8 @@ export class Game {
 			deviator.handle_collison(this.ball)
 		})
 		this.accelerators.forEach((accelerator) => {
-			accelerator.handle_collision(this.ball)
-			if (!accelerator.active) {
+			const { collided } = accelerator.handle_collision(this.ball)
+			if (collided) {
 				this.accelerators = this.accelerators.filter((a) => a !== accelerator)
 			}
 		})
