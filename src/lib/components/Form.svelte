@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { submit_score } from '$lib/client/scores'
+	import { ScoreClient } from '$lib/client/scores'
 	import { NameSchema } from '$lib/shared/schemas'
 
 	type Props = {
@@ -43,7 +43,7 @@
 			return
 		}
 
-		const { success, id } = await submit_score(name, score)
+		const { success, id } = await ScoreClient.submit_score(name, score)
 
 		if (id) latest_score_id = id
 

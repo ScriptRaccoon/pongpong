@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { type Game } from '$lib/client/game.svelte'
-	import { fetch_scores } from '$lib/client/scores'
 	import Form from '$lib/components/Form.svelte'
 	import Scores from '$lib/components/Scores.svelte'
 	import { type ScoreList } from '$lib/shared/schemas'
 	import { onMount } from 'svelte'
 	import Menu from './Menu.svelte'
+	import { ScoreClient } from '$lib/client/scores'
 
 	type Props = { game: Game }
 
@@ -26,7 +26,7 @@
 	})
 
 	async function update_scores() {
-		const updated_scores = await fetch_scores(show_all_scores)
+		const updated_scores = await ScoreClient.fetch_scores(show_all_scores)
 		if (updated_scores) scores = updated_scores
 	}
 
