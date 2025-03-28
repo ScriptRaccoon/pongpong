@@ -87,9 +87,23 @@ export class Game {
 		}
 	}
 
+	private async create_servergame(): Promise<{ success: boolean }> {
+		try {
+			const res = await fetch(Game.API_URL, { method: 'POST' })
+			return { success: res.ok }
+		} catch (err) {
+			console.error(err)
+			return { success: false }
+		}
+	}
+
 	public async start() {
-		// TODO: error handling
-		await fetch(Game.API_URL, { method: 'POST' })
+		const { success } = await this.create_servergame()
+		if (!success) {
+			this.error_message = 'Failed to create game'
+			return
+		}
+
 		this.score = 0
 		this.ball.reset()
 		this.player_left.reset()
@@ -109,13 +123,20 @@ export class Game {
 		if (Math.random() < 0.05) {
 			this.accelerators.push(new Accelerator())
 		}
-		this.send_hit()
+		this.send_hit_to_server()
 	}
 
-	private async send_hit() {
-		const res = await fetch(`${Game.API_URL}?action=hit`, { method: 'PATCH' })
-		if (!res.ok) {
-			this.error_message = (await res.json())?.message ?? null
+	private async send_hit_to_server() {
+		try {
+			const res = await fetch(`${Game.API_URL}?action=hit`, { method: 'PATCH' })
+
+			if (!res.ok) {
+				this.error_message = (await res.json())?.message ?? 'Failed to send hit'
+				this.status = STATUS.GAMEOVER
+			}
+		} catch (err) {
+			console.error(err)
+			this.error_message = 'Failed to send hit'
 			this.status = STATUS.GAMEOVER
 		}
 	}
@@ -123,14 +144,24 @@ export class Game {
 	private async handle_gameover() {
 		this.status = STATUS.GAMEOVER
 
-		const res = await fetch(Game.API_URL) // TODO: error handling
-		const res_json = await res.json()
-		this.score = res_json.score // TODO: error handling
+		try {
+			const res = await fetch(Game.API_URL, { method: 'GET' })
+			const res_json = await res.json()
 
-		this.gameover_callback?.()
+			if (!res.ok) {
+				this.error_message = res_json?.message ?? 'Failed to get score'
+				return
+			}
+
+			this.score = res_json.score
+			this.gameover_callback?.()
+		} catch (err) {
+			console.error(err)
+			this.error_message = 'Failed to get score'
+		}
 	}
 
-	public on_gameover(callback: () => void) {
+	public ongameover(callback: () => void) {
 		this.gameover_callback = callback
 	}
 

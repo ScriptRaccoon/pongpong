@@ -18,7 +18,7 @@
 	let dialog = $state<HTMLDialogElement | null>(null)
 	let latest_score_id = $state<number | null>(null)
 
-	game.on_gameover(() => {
+	game.ongameover(() => {
 		if (game.score > 0 && dialog) {
 			form_visible = true
 			dialog.showModal()
