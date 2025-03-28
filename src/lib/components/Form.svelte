@@ -25,6 +25,7 @@
 	function close_dialog() {
 		dialog?.close()
 		form_visible = false
+		error = ''
 	}
 
 	async function handle_submit(event: SubmitEvent) {
@@ -57,12 +58,7 @@
 	}
 </script>
 
-<dialog
-	bind:this={dialog}
-	onclose={() => {
-		form_visible = false
-	}}
->
+<dialog bind:this={dialog} onclose={close_dialog}>
 	<form class="form" onsubmit={handle_submit}>
 		<h2>
 			Submit your score of <span>{score}</span>
