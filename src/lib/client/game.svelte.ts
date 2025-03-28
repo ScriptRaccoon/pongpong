@@ -115,14 +115,10 @@ export class Game {
 		this.loop()
 	}
 
-	private async handle_collision() {
+	private handle_collision() {
 		this.score++
-		if (Math.random() < 0.1) {
-			this.deviators.push(new Deviator())
-		}
-		if (Math.random() < 0.05) {
-			this.accelerators.push(new Accelerator())
-		}
+		if (Math.random() < 0.1) this.deviators.push(new Deviator())
+		if (Math.random() < 0.05) this.accelerators.push(new Accelerator())
 		this.send_hit_to_server()
 	}
 
@@ -131,7 +127,8 @@ export class Game {
 			const res = await fetch(`${Game.API_URL}?action=hit`, { method: 'PATCH' })
 
 			if (!res.ok) {
-				this.error_message = (await res.json())?.message ?? 'Failed to send hit'
+				const res_json = await res.json()
+				this.error_message = res_json?.message ?? 'Failed to send hit'
 				this.status = STATUS.GAMEOVER
 			}
 		} catch (err) {
@@ -141,8 +138,38 @@ export class Game {
 		}
 	}
 
+	private async get_score_from_server(): Promise<{ score: number; success: boolean }> {
+		try {
+			const res = await fetch(Game.API_URL, { method: 'GET' })
+			const res_json = await res.json()
+
+			if (!res.ok) {
+				return { score: -1, success: false }
+			}
+
+			const score = res_json.score
+
+			if (!Number.isInteger(score)) {
+				return { score: -1, success: false }
+			}
+
+			return { score, success: true }
+		} catch (err) {
+			console.error(err)
+			return { score: -1, success: false }
+		}
+	}
+
 	private async handle_gameover() {
 		this.status = STATUS.GAMEOVER
+
+		const { score, success } = await this.get_score_from_server()
+
+		if (success) {
+			this.score = score
+			this.gameover_callback?.()
+			return
+		}
 
 		try {
 			const res = await fetch(Game.API_URL, { method: 'GET' })
