@@ -1,6 +1,6 @@
 import { ScoreService } from '$lib/server/ScoreService'
-import { games } from '$lib/server/ServerGame'
 import { turso } from '$lib/server/turso'
+import { get_game } from '$lib/server/utils'
 import { PostRequestSchema } from '$lib/shared/schemas'
 import type { RequestHandler } from '@sveltejs/kit'
 import { error, json } from '@sveltejs/kit'
@@ -9,16 +9,16 @@ const score_service = new ScoreService(turso)
 
 export const GET: RequestHandler = async (event) => {
 	try {
-		const limit_param = event.url.searchParams.get('limit')
-		const limit = Number(limit_param)
+		const limit = event.url.searchParams.has('limit')
+			? Number(event.url.searchParams.get('limit'))
+			: null
 
-		if (limit_param && Number.isInteger(limit) && limit >= 0) {
-			const scores = await score_service.get_best_scores(limit)
-			return json({ scores })
-		} else {
-			const scores = await score_service.get_all_scores()
-			return json({ scores })
-		}
+		const scores =
+			limit !== null
+				? await score_service.get_best_scores(limit)
+				: await score_service.get_all_scores()
+
+		return json({ scores })
 	} catch (err) {
 		console.error(err)
 		return error(500, 'Internal server error')
@@ -36,11 +36,8 @@ export const POST: RequestHandler = async (event) => {
 
 	const { name, score } = result.data
 
-	const game_id = event.cookies.get('game_id')
-	if (!game_id) return error(400, 'Missing game id')
-
-	const game = games[game_id]
-	if (!game) return error(404, 'Game not found')
+	const game = get_game(event.cookies)
+	if (!game) return error(400, 'Missing game')
 
 	const actual_score = game.score
 

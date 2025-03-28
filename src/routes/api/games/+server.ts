@@ -1,31 +1,26 @@
 import { error, json } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
-import { games, ServerGame } from '$lib/server/ServerGame'
+import { create_game, get_game } from '$lib/server/utils'
 
 export const POST: RequestHandler = async (event) => {
-	const game = new ServerGame()
-	games[game.id] = game
-	event.cookies.set('game_id', game.id, { path: '/' })
+	create_game(event.cookies)
 	return new Response('game created')
 }
 
 export const PATCH: RequestHandler = async (event) => {
-	const game_id = event.cookies.get('game_id')
-	if (!game_id) return error(400, 'Missing game id')
-	const game = games[game_id]
-	if (!game) return error(404, 'Game not found')
+	const game = get_game(event.cookies)
+	if (!game) return error(400, 'Missing game')
 
-	const action_type = event.url.searchParams.get('action') ?? ''
-	const { error: action_error, status } = game.add_action(action_type)
+	const action = event.url.searchParams.get('action') ?? ''
+	const { error: action_error, status } = game.add_action(action)
 
 	if (action_error) return error(status, action_error)
 	return json({ message: 'Action added' })
 }
 
 export const GET: RequestHandler = async (event) => {
-	const game_id = event.cookies.get('game_id')
-	if (!game_id) return error(400, 'Missing game id')
-	const game = games[game_id]
-	if (!game) return error(404, 'Game not found')
+	const game = get_game(event.cookies)
+	if (!game) return error(400, 'Missing game')
+
 	return json({ score: game.score })
 }
