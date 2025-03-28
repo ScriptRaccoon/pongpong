@@ -18,17 +18,17 @@
 body {
 	background-color: var(--bg-color);
 	color: var(--text-color);
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: system-ui, sans-serif;
 	line-height: 1.4;
 	padding-bottom: 2rem;
 }
 
 button {
 	font: inherit;
-	background: var(--accent-color);
-	color: var(--text-color);
 	border: none;
 	cursor: pointer;
+	background: var(--accent-color);
+	color: var(--text-color);
 	padding: 0.2rem 0.6rem;
 	font-weight: 500;
 	border-radius: 3px;
@@ -49,16 +49,16 @@ button:focus-visible {
 }
 
 h2 {
-	margin-bottom: 0.5rem;
+	font-weight: 500;
 }
 
 input[type='text'] {
 	font: inherit;
 	color: inherit;
+	border: none;
 	background: var(--black-color);
 	border-radius: 0.2rem;
 	padding: 0.4rem;
-	border: none;
 	width: 100%;
 }
 

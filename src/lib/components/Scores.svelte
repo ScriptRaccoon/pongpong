@@ -53,6 +53,10 @@
 		margin-top: 1rem;
 	}
 
+	h2 {
+		margin-bottom: 0.5rem;
+	}
+
 	table {
 		border-collapse: collapse;
 		width: 100%;

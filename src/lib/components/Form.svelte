@@ -93,6 +93,10 @@
 </dialog>
 
 <style>
+	h2 {
+		margin-bottom: 0.5rem;
+	}
+
 	dialog {
 		border: none;
 		background-color: var(--card-color);

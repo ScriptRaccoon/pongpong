@@ -9,5 +9,7 @@
 
 	h1 {
 		text-align: center;
+		font-family: 'Courier New', Courier, monospace;
+		letter-spacing: 2px;
 	}
 </style>
