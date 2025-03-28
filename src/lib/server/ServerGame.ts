@@ -1,6 +1,6 @@
 import { RateLimiter } from './RateLimiter'
 
-export const GAME_ACTION_TYPE = ['start', 'hit'] as const
+export const GAME_ACTION_TYPE = ['start', 'hit', 'finish'] as const
 
 type GameActionType = (typeof GAME_ACTION_TYPE)[number]
 
@@ -43,6 +43,7 @@ export class ServerGame {
 	}
 
 	public finish() {
+		this.add_action('finish')
 		delete games[this.id]
 	}
 }
