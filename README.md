@@ -6,7 +6,6 @@ PongPong is a simple browser-based game with a leaderboard. The leaderboard is s
 
 <img width="500" alt="pongpong-screen" src="https://github.com/user-attachments/assets/04209047-80e1-4103-8118-ac9c11534c99" />
 
-
 ## Gameplay
 
 1. The game features two paddles (white) that can be controlled using the Arrow Keys (`Up` / `Down`). The active paddle depends on the current direction of the ball.
@@ -17,6 +16,10 @@ PongPong is a simple browser-based game with a leaderboard. The leaderboard is s
 6. All scores\* are recorded on the leaderboard, which defaults to 5 entries but can be expanded to show all entries.
 
 \*We decided to store _all_ scores instead of always just keeping the 5 best ones in the database so that the number can be changed at any time in the future and also since, say, one could retrieve the best 5 scores of the last week.
+
+## Server-side validation
+
+When a user starts a game in the browser, a corresponding game is also initialized on the server. Each hit of the ball is communicated with the server. The score is based on the number of hits that the server recieved. Also, the hits are rate limited. This rules out "obvious" cheating attempts.
 
 ## Setup
 
