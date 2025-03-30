@@ -4,7 +4,8 @@ PongPong is a simple browser-based game with a leaderboard. The leaderboard is s
 
 <https://pongpong-game.netlify.app/>
 
-<img width="500" alt="pongpong-screenshot" src="https://github.com/user-attachments/assets/0026e872-8a80-4dc9-9013-eecb0e53286d" />
+<img width="500" alt="pongpong-screen" src="https://github.com/user-attachments/assets/04209047-80e1-4103-8118-ac9c11534c99" />
+
 
 ## Gameplay
 
